@@ -140,7 +140,6 @@ select,input[type=search]{width:100%;padding:11px 12px;border:1.5px solid var(--
 /* footer */
 .footer{background:var(--ink);color:#C5CFDF;padding:36px 0}
 .footer-in{display:grid;gap:8px}
-.footer .demo{font-size:.85rem;color:#8E9BB0}
 
 /* modal */
 .modal{position:fixed;inset:0;z-index:100;background:rgba(14,26,43,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:16px;overflow-y:auto}
