@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Car Care Services | Compare car wash & car service in Oman</title>
+  <meta name="description" content="Car Care Services lets you compare car wash and car service companies in Oman that come to your home or office. Then call or WhatsApp them.">
+  <meta name="theme-color" content="#C8102E">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="header" id="top">
+  <div class="wrap header-in">
+    <a href="#top" class="logo" aria-label="Car Care Services">
+      <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#C8102E"/><path d="M8 25v-5.5c0-1 .7-1.8 1.7-2l1.9-4.4c.4-.9 1.3-1.5 2.3-1.5h12.2c1 0 1.9.6 2.3 1.5l1.9 4.4c1 .2 1.7 1 1.7 2V25c0 .6-.4 1-1 1H9c-.6 0-1-.4-1-1z" fill="#fff"/><path d="M13 17.5l1.4-3.2h11.2l1.4 3.2z" fill="#C8102E"/><circle cx="13.5" cy="26.5" r="3" fill="#C8102E" stroke="#fff" stroke-width="1.8"/><circle cx="26.5" cy="26.5" r="3" fill="#C8102E" stroke="#fff" stroke-width="1.8"/></svg>
+      <span class="logo-text">Car Care Services<small>خدمات السيارات</small></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#services" data-i18n="nav.services"></a>
+      <a href="#providers" data-i18n="nav.providers"></a>
+      <a href="#how" data-i18n="nav.how"></a>
+      <a href="#join" data-i18n="nav.join"></a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-ghost" id="langBtn" type="button"><span data-i18n="lang.btn"></span></button>
+      <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="badge"><i class="dot"></i><span data-i18n="hero.badge"></span></span>
+        <h1 data-i18n-html="hero.title"></h1>
+        <p class="lead" data-i18n="hero.sub"></p>
+
+        <form class="search" id="heroSearch">
+          <label>
+            <span data-i18n="search.service"></span>
+            <select id="heroService"></select>
+          </label>
+          <label>
+            <span data-i18n="search.gov"></span>
+            <select id="heroGov"></select>
+          </label>
+          <button class="btn btn-primary" type="submit"><span data-i18n="search.btn"></span> <i class="arrow">→</i></button>
+        </form>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-bg"></div>
+        <svg viewBox="0 0 520 280" class="car">
+          <ellipse cx="260" cy="246" rx="215" ry="14" fill="#0E1A2B" opacity=".12"/>
+          <path d="M34 176c0-20 14-31 40-36l52-10c20-30 52-48 96-48h104c36 0 64 18 88 48l38 8c26 5 36 18 36 38v16c0 8-6 14-14 14H48c-8 0-14-6-14-14z" fill="#C8102E"/>
+          <path d="M146 128c17-22 42-34 78-34h50v34zM290 94h44c25 0 43 14 62 34H290z" fill="#DCEBFA"/>
+          <path d="M40 186h448" stroke="#fff" stroke-opacity=".25" stroke-width="3"/>
+          <rect x="468" y="160" width="22" height="12" rx="5" fill="#F9D26B"/>
+          <rect x="30" y="158" width="14" height="12" rx="5" fill="#fff" opacity=".8"/>
+          <g><circle cx="132" cy="208" r="36" fill="#0E1A2B"/><circle cx="132" cy="208" r="17" fill="#E5E7EB"/><circle cx="132" cy="208" r="6" fill="#0E1A2B"/></g>
+          <g><circle cx="392" cy="208" r="36" fill="#0E1A2B"/><circle cx="392" cy="208" r="17" fill="#E5E7EB"/><circle cx="392" cy="208" r="6" fill="#0E1A2B"/></g>
+          <g fill="#fff"><path d="M190 52l5 12 12 5-12 5-5 12-5-12-12-5 12-5z" opacity=".95"/><path d="M420 40l3.5 8 8 3.5-8 3.5-3.5 8-3.5-8-8-3.5 8-3.5z"/><circle cx="90" cy="76" r="5"/><circle cx="470" cy="92" r="4"/></g>
+        </svg>
+        <div class="chip chip-a"><b>⭐ 4.8</b> <span>avg. rating</span></div>
+        <div class="chip chip-b"><b>🚐</b> <span>~30 min</span></div>
+      </div>
+    </div>
+
+    <div class="wrap stats">
+      <div><b id="stProviders">0</b><span data-i18n="stats.providers"></span></div>
+      <div><b id="stGovs">0</b><span data-i18n="stats.govs"></span></div>
+      <div><b id="stServices">0</b><span data-i18n="stats.services"></span></div>
+      <div><b>0</b><span data-i18n="stats.km"></span></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 data-i18n="services.title"></h2>
+        <p data-i18n="services.sub"></p>
+      </div>
+      <div class="services" id="servicesGrid"></div>
+    </div>
+  </section>
+
+  <!-- PROVIDERS -->
+  <section class="section alt" id="providers">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 data-i18n="providers.title"></h2>
+        <p data-i18n="providers.sub"></p>
+      </div>
+
+      <div class="filters">
+        <input type="search" id="fSearch" data-i18n-placeholder="filter.search" autocomplete="off">
+        <select id="fService" aria-label="Service"></select>
+        <select id="fGov" aria-label="Governorate"></select>
+        <select id="fSort" aria-label="Sort"></select>
+        <label class="check"><input type="checkbox" id="fOpen"><span data-i18n="filter.open"></span></label>
+      </div>
+      <p class="count" id="count" aria-live="polite"></p>
+
+      <div class="grid" id="providersGrid"></div>
+      <div class="empty" id="empty" hidden>
+        <div class="empty-ico">🔎</div>
+        <h3 data-i18n="empty.title"></h3>
+        <p data-i18n="empty.sub"></p>
+        <button class="btn btn-dark" id="resetBtn" type="button" data-i18n="reset"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="sec-head"><h2 data-i18n="how.title"></h2></div>
+      <div class="steps">
+        <div class="step"><span class="num">1</span><h3 data-i18n="how.1.t"></h3><p data-i18n="how.1.d"></p></div>
+        <div class="step"><span class="num">2</span><h3 data-i18n="how.2.t"></h3><p data-i18n="how.2.d"></p></div>
+        <div class="step"><span class="num">3</span><h3 data-i18n="how.3.t"></h3><p data-i18n="how.3.d"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section class="section" id="join">
+    <div class="wrap">
+      <div class="join">
+        <div>
+          <h2 data-i18n="join.title"></h2>
+          <p data-i18n="join.sub"></p>
+        </div>
+        <a class="btn btn-wa btn-lg" id="joinBtn" target="_blank" rel="noopener"><span data-i18n="join.btn"></span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-in">
+    <div class="logo-text light">Car Care Services<small>خدمات السيارات</small></div>
+    <p data-i18n="footer.tag"></p>
+    <p class="demo" data-i18n="footer.demo"></p>
+  </div>
+</footer>
+
+<!-- Details modal -->
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="x" id="mClose" type="button" aria-label="Close">×</button>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
