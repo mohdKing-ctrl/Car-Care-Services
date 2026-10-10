@@ -21,6 +21,7 @@
       <span class="logo-text">Car Care Services<small>خدمات السيارات</small></span>
     </a>
     <nav class="nav" id="nav">
+      <a href="#utas" class="nav-utas" data-i18n="utas.link"></a>
       <a href="#services" data-i18n="nav.services"></a>
       <a href="#providers" data-i18n="nav.providers"></a>
       <a href="#how" data-i18n="nav.how"></a>
@@ -53,6 +54,12 @@
           </label>
           <button class="btn btn-primary" type="submit"><span data-i18n="search.btn"></span> <i class="arrow">→</i></button>
         </form>
+
+        <a href="#utas" class="utas-cta">
+          <img src="img/utas-logo.png" alt="UTAS" width="200" height="87">
+          <span><b data-i18n="utas.cta.t"></b><small data-i18n="utas.cta.s"></small></span>
+          <i class="arrow">→</i>
+        </a>
       </div>
 
       <div class="hero-art" aria-hidden="true">
@@ -78,6 +85,91 @@
       <div><b id="stGovs">0</b><span data-i18n="stats.govs"></span></div>
       <div><b id="stServices">0</b><span data-i18n="stats.services"></span></div>
       <div><b>0</b><span data-i18n="stats.km"></span></div>
+    </div>
+  </section>
+
+  <!-- UTAS STUDENTS & STAFF -->
+  <section class="section utas" id="utas">
+    <div class="wrap utas-grid">
+      <div class="utas-intro">
+        <img class="utas-logo" src="img/utas-logo.png" alt="University of Technology and Applied Sciences" width="200" height="87">
+        <span class="badge badge-utas" data-i18n="utas.badge"></span>
+        <h2 data-i18n="utas.title"></h2>
+        <p class="lead" data-i18n="utas.sub"></p>
+        <ol class="utas-steps">
+          <li><span>1</span><b data-i18n="utas.t1"></b></li>
+          <li><span>2</span><b data-i18n="utas.t2"></b></li>
+          <li><span>3</span><b data-i18n="utas.t3"></b></li>
+        </ol>
+      </div>
+
+      <form class="utas-form" id="utasForm" novalidate>
+        <fieldset class="seg">
+          <legend data-i18n="utas.role"></legend>
+          <label><input type="radio" name="uRole" value="student" checked><span data-i18n="utas.student"></span></label>
+          <label><input type="radio" name="uRole" value="staff"><span data-i18n="utas.staff"></span></label>
+        </fieldset>
+
+        <label class="field">
+          <span data-i18n="utas.branch"></span>
+          <select id="uBranch"></select>
+        </label>
+
+        <fieldset class="field">
+          <legend data-i18n="utas.services"></legend>
+          <div class="chips" id="uServices"></div>
+        </fieldset>
+
+        <div class="f-row">
+          <label class="field">
+            <span data-i18n="utas.brand"></span>
+            <select id="uBrand"></select>
+          </label>
+          <label class="field">
+            <span data-i18n="utas.plate"></span>
+            <input type="text" id="uPlate" maxlength="12" autocomplete="off">
+          </label>
+        </div>
+
+        <label class="field">
+          <span data-i18n="utas.parking"></span>
+          <input type="text" id="uParking" data-i18n-placeholder="utas.parkingPh" maxlength="80" autocomplete="off">
+        </label>
+
+        <div class="f-row">
+          <label class="field">
+            <span data-i18n="utas.date"></span>
+            <input type="date" id="uDate">
+          </label>
+          <label class="field">
+            <span data-i18n="utas.time"></span>
+            <select id="uTime"></select>
+          </label>
+        </div>
+
+        <div class="f-row">
+          <label class="field">
+            <span data-i18n="utas.name"></span>
+            <input type="text" id="uName" maxlength="60" autocomplete="name">
+          </label>
+          <label class="field">
+            <span data-i18n="utas.phone"></span>
+            <input type="tel" id="uPhone" inputmode="numeric" maxlength="12" placeholder="9X XXX XXX" autocomplete="tel">
+          </label>
+        </div>
+
+        <div class="field">
+          <span class="lbl" data-i18n="utas.companies"></span>
+          <div class="co-list" id="uCompanies"></div>
+        </div>
+
+        <div class="u-total" id="uTotal" hidden>
+          <span data-i18n="utas.est"></span>
+          <b id="uTotalVal"></b>
+        </div>
+        <p class="u-err" id="uErr" role="alert" hidden></p>
+        <button class="btn btn-wa btn-lg" type="submit"><span id="uSendIcon"></span><span data-i18n="utas.send"></span></button>
+      </form>
     </div>
   </section>
 

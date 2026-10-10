@@ -9,6 +9,7 @@ This is a demo for a college project. All companies are fictional examples.
 - Search by service (wash, interior, polish, oil change, battery, tyres, A/C, brakes) and by governorate (all 11 in Oman)
 - Company cards with rating, price in OMR, areas served, open/closed status (Oman time)
 - **Call** and **WhatsApp** buttons (WhatsApp opens with a ready message for that company and service)
+- **UTAS Students & Staff** order form: choose role, UTAS branch (11 branches), services, car brand, campus car-park location and time. Only companies that serve that branch and offer all selected services are shown; the order is sent to the chosen company on WhatsApp
 - English and Arabic (RTL) in one click
 - Mobile friendly, no frameworks, no build step
 

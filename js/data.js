@@ -144,5 +144,47 @@ const PROVIDERS = [
     rating: 4.4, reviews: 33, years: 3, hours: [7, 20], reply: 30, wa: '96891000014',
     desc: 'Serving workers, families and fleets in Duqm and the Al Wusta region.',
     descAr: 'نخدم العاملين والعائلات والأساطيل في الدقم ومنطقة الوسطى.'
+  },
+  {
+    /* Sample "UTAS partner" company: shows the UTAS logo and is listed first in the UTAS order form */
+    id: 'utas-campus-care', name: 'Campus Car Care (UTAS Partner)', nameAr: 'كامبس كار كير (شريك UTAS)', initials: 'UT', color: '#1F3F8F',
+    utas: true, logo: 'img/utas-logo.png',
+    govs: ['muscat', 'sharqiyah-n', 'dakhiliyah', 'batinah-n', 'dhahirah', 'sharqiyah-s', 'batinah-s', 'dhofar', 'musandam'],
+    areas: [['UTAS campuses', 'فروع جامعة التقنية والعلوم التطبيقية'], ['Campus car parks', 'مواقف الجامعة']],
+    services: { wash: 2.5, interior: 5.5, detail: 16, oil: 12, battery: 25, tyre: 3, ac: 14, brakes: 20 },
+    rating: 4.9, reviews: 120, years: 3, hours: [7, 18], reply: 10, wa: '96891000015',
+    desc: 'Our dedicated team for UTAS students and staff. We come to your campus car park while you are in class, with student-friendly prices on every service.',
+    descAr: 'فريقنا المخصص لطلاب وموظفي جامعة التقنية والعلوم التطبيقية. نصلك إلى موقف سيارتك في الحرم الجامعي وأنت في المحاضرة بأسعار مناسبة للطلاب.'
   }
+];
+
+/* ------------------------------------------------------------------
+   UTAS (University of Technology and Applied Sciences) branches.
+   `gov` links each branch to the governorate used by the companies above.
+------------------------------------------------------------------- */
+const UTAS_BRANCHES = [
+  { key: 'muscat',   en: 'Muscat',      ar: 'مسقط',     gov: 'muscat' },
+  { key: 'ibra',     en: 'Ibra',        ar: 'إبراء',    gov: 'sharqiyah-n' },
+  { key: 'nizwa',    en: 'Nizwa',       ar: 'نزوى',     gov: 'dakhiliyah' },
+  { key: 'shinas',   en: 'Shinas',      ar: 'شناص',     gov: 'batinah-n' },
+  { key: 'suhar',    en: 'Suhar',       ar: 'صحار',     gov: 'batinah-n' },
+  { key: 'ibri',     en: 'Ibri',        ar: 'عبري',     gov: 'dhahirah' },
+  { key: 'sur',      en: 'Sur',         ar: 'صور',      gov: 'sharqiyah-s' },
+  { key: 'rustaq',   en: 'Rustaq',      ar: 'الرستاق',  gov: 'batinah-s' },
+  { key: 'salalah',  en: 'Salalah',     ar: 'صلالة',    gov: 'dhofar' },
+  { key: 'mussanah', en: 'Al Mussanah', ar: 'المصنعة',  gov: 'batinah-s' },
+  { key: 'musandam', en: 'Musandam',    ar: 'مسندم',    gov: 'musandam' }
+];
+
+const CAR_BRANDS = [
+  ['Toyota', 'تويوتا'], ['Nissan', 'نيسان'], ['Hyundai', 'هيونداي'], ['Kia', 'كيا'], ['Honda', 'هوندا'],
+  ['Ford', 'فورد'], ['Chevrolet', 'شيفروليه'], ['Mitsubishi', 'ميتسوبيشي'], ['Mazda', 'مازدا'], ['Suzuki', 'سوزوكي'],
+  ['Lexus', 'لكزس'], ['Mercedes-Benz', 'مرسيدس'], ['BMW', 'بي إم دبليو'], ['Other', 'أخرى']
+];
+
+const TIME_SLOTS = [
+  { v: '8-10',  en: '8:00 – 10:00 AM',     ar: '8:00 – 10:00 ص' },
+  { v: '10-12', en: '10:00 AM – 12:00 PM', ar: '10:00 ص – 12:00 م' },
+  { v: '12-14', en: '12:00 – 2:00 PM',     ar: '12:00 – 2:00 م' },
+  { v: '14-16', en: '2:00 – 4:00 PM',      ar: '2:00 – 4:00 م' }
 ];

@@ -28,6 +28,11 @@
   const fmtPhone = (wa) => '+' + wa.slice(0, 3) + ' ' + wa.slice(3, 7) + ' ' + wa.slice(7);
   const waLink = (num, text) => 'https://wa.me/' + num + '?text=' + encodeURIComponent(text);
   const nameOf = (p) => pick(p.name, p.nameAr);
+  // Company avatar: the UTAS partner shows the UTAS logo, others show coloured initials
+  const avatarHTML = (p) => p.logo
+    ? '<div class="avatar logo-av"><img src="' + p.logo + '" alt="UTAS"></div>'
+    : '<div class="avatar" style="background:' + p.color + '">' + p.initials + '</div>';
+  const partnerPill = (p) => (p.utas ? '<span class="pill utas-pill">' + t('utas.partner') + '</span>' : '');
   const minPrice = (p, key) => (key && p.services[key] != null ? p.services[key] : Math.min(...Object.values(p.services)));
 
   // Opening hours are evaluated in Oman time (UTC+4)
@@ -119,11 +124,11 @@
     const from = minPrice(p, state.service);
     return '<article class="card">' +
       '<div class="card-top">' +
-        '<div class="avatar" style="background:' + p.color + '">' + p.initials + '</div>' +
+        '' + avatarHTML(p) + '' +
         '<div><h3>' + nameOf(p) + '</h3>' +
         '<div class="meta"><span class="rate"><i>★</i> ' + p.rating.toFixed(1) + '</span><span>(' + p.reviews + ')</span><span>· ' + t('card.yrs', { n: p.years }) + '</span></div></div>' +
       '</div>' +
-      '<div><span class="pill ' + (open ? 'on' : 'off') + '">' + (open ? t('card.open') : t('card.closed')) + '</span></div>' +
+      '<div class="pills"><span class="pill ' + (open ? 'on' : 'off') + '">' + (open ? t('card.open') : t('card.closed')) + '</span>' + partnerPill(p) + '</div>' +
       '<div class="tags">' + tags + '</div>' +
       '<div class="serves"><b>' + t('card.serves') + ':</b> ' + areas + '</div>' +
       '<div class="price"><div><small>' + t('card.from') + '</small> <b>' + from.toFixed(3) + ' <small>' + t('cur') + '</small></b></div>' +
@@ -154,9 +159,9 @@
         '<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="' + waLink(p.wa, bookMsg(p, k)) + '">' + t('modal.book') + '</a></div>';
     }).join('');
     $('#mBody').innerHTML =
-      '<div class="card-top"><div class="avatar" style="background:' + p.color + '">' + p.initials + '</div>' +
+      '<div class="card-top">' + avatarHTML(p) + '' +
       '<div><h3 id="mTitle">' + nameOf(p) + '</h3><div class="meta"><span class="rate"><i>★</i> ' + p.rating.toFixed(1) + '</span><span>(' + p.reviews + ')</span>' +
-      '<span class="pill ' + (isOpen(p) ? 'on' : 'off') + '">' + (isOpen(p) ? t('card.open') : t('card.closed')) + '</span></div></div></div>' +
+      '<span class="pill ' + (isOpen(p) ? 'on' : 'off') + '">' + (isOpen(p) ? t('card.open') : t('card.closed')) + '</span>' + partnerPill(p) + '</div></div></div>' +
       '<p class="m-desc">' + pick(p.desc, p.descAr) + '</p>' +
       '<div class="m-h">' + t('modal.hours') + '</div><div>' + hoursText(p) + ' · ' + t('card.reply', { n: p.reply }) + '</div>' +
       '<div class="m-h">' + t('card.serves') + '</div><div class="tags">' + p.areas.map((a) => '<span class="tag">' + pick(a[0], a[1]) + '</span>').join('') + '</div>' +
@@ -172,6 +177,110 @@
     document.body.style.overflow = '';
   }
 
+  /* ---------- UTAS students & staff order ---------- */
+  const utas = { branch: '', services: new Set(), brand: '', time: '', company: '' };
+  const listSep = () => (isAr() ? '، ' : ', ');
+
+  // Companies that serve the selected branch's governorate AND offer every selected service
+  function utasMatches() {
+    const b = UTAS_BRANCHES.find((x) => x.key === utas.branch);
+    if (!b || utas.services.size === 0) return null;
+    return PROVIDERS
+      .filter((p) => p.govs.includes(b.gov) && Array.from(utas.services).every((k) => p.services[k] != null))
+      .sort((a, c) => (c.utas ? 1 : 0) - (a.utas ? 1 : 0) || c.rating - a.rating || c.reviews - a.reviews);
+  }
+  const utasTotal = (p) => Array.from(utas.services).reduce((sum, k) => sum + p.services[k], 0);
+
+  function renderUtasCompanies() {
+    const list = utasMatches();
+    const box = $('#uCompanies');
+    if (list === null || list.length === 0) {
+      utas.company = '';
+      box.innerHTML = '<div class="co-note">' + t(list === null ? 'utas.pickFirst' : 'utas.none') + '</div>';
+    } else {
+      if (!list.some((p) => p.id === utas.company)) utas.company = list[0].id;
+      box.innerHTML = list.map((p) =>
+        '<label class="co"><input type="radio" name="uCo" value="' + p.id + '"' + (p.id === utas.company ? ' checked' : '') + '>' +
+          '' + avatarHTML(p) + '' +
+          '<div class="info"><b>' + nameOf(p) + '</b>' + (p.utas ? '<span class="pill utas-pill">' + t('utas.partner') + '</span> ' : '') + '<small>★ ' + p.rating.toFixed(1) + ' (' + p.reviews + ') · ' + (isOpen(p) ? t('card.open') : t('card.closed')) + '</small></div>' +
+          '<div class="cp">' + utasTotal(p).toFixed(3) + ' <small>' + t('cur') + '</small></div>' +
+          '<span class="tick">✓</span></label>').join('');
+    }
+    updateUtasTotal();
+  }
+  function updateUtasTotal() {
+    const chosen = PROVIDERS.find((p) => p.id === utas.company);
+    $('#uTotal').hidden = !chosen;
+    if (chosen) $('#uTotalVal').textContent = price(utasTotal(chosen));
+  }
+
+  function renderUtas() {
+    fillSelect($('#uBranch'), [{ v: '', l: t('utas.branchPh') }].concat(UTAS_BRANCHES.map((b) => ({ v: b.key, l: pick(b.en, b.ar) }))), utas.branch);
+    fillSelect($('#uBrand'), [{ v: '', l: t('utas.brandPh') }].concat(CAR_BRANDS.map((b) => ({ v: b[0], l: pick(b[0], b[1]) }))), utas.brand);
+    fillSelect($('#uTime'), [{ v: '', l: t('utas.timePh') }].concat(TIME_SLOTS.map((s) => ({ v: s.v, l: pick(s.en, s.ar) }))), utas.time);
+    $('#uServices').innerHTML = SERVICES.map((s) =>
+      '<label><input type="checkbox" value="' + s.key + '"' + (utas.services.has(s.key) ? ' checked' : '') + '><span>' + s.icon + ' ' + svcName(s) + '</span></label>').join('');
+    $('#uSendIcon').innerHTML = waIcon;
+    // earliest date = today in Oman time (UTC+4)
+    $('#uDate').min = new Date(Date.now() + 4 * 3600000).toISOString().slice(0, 10);
+    renderUtasCompanies();
+  }
+
+  function utasMessage(p) {
+    const brand = CAR_BRANDS.find((b) => b[0] === utas.brand);
+    const plate = $('#uPlate').value.trim();
+    const slot = TIME_SLOTS.find((s) => s.v === utas.time);
+    const role = $('input[name="uRole"]:checked').value === 'staff' ? t('utas.staff') : t('utas.student');
+    const branch = UTAS_BRANCHES.find((b) => b.key === utas.branch);
+    return t('msg.utas', {
+      company: nameOf(p),
+      name: $('#uName').value.trim(),
+      role: role,
+      branch: 'UTAS ' + pick(branch.en, branch.ar),
+      services: Array.from(utas.services).map((k) => svcName(svcByKey(k))).join(listSep()),
+      car: pick(brand[0], brand[1]) + (plate ? ' (' + plate + ')' : ''),
+      parking: $('#uParking').value.trim(),
+      when: $('#uDate').value + ', ' + pick(slot.en, slot.ar),
+      total: price(utasTotal(p)),
+      phone: '+968 ' + utasPhone()
+    });
+  }
+  const utasPhone = () => $('#uPhone').value.replace(/[\s\-+]/g, '').replace(/^968/, '');
+
+  function utasError(key, el) {
+    $$('.utas-form .bad').forEach((x) => x.classList.remove('bad'));
+    const box = $('#uErr');
+    box.className = 'u-err';
+    box.textContent = t(key);
+    box.hidden = false;
+    if (el) { el.classList.add('bad'); el.focus(); }
+    return false;
+  }
+
+  function utasSubmit(e) {
+    e.preventDefault();
+    const company = PROVIDERS.find((p) => p.id === utas.company);
+    const ok =
+      (utas.branch || utasError('utas.e.branch', $('#uBranch'))) &&
+      (utas.services.size || utasError('utas.e.services')) &&
+      (company || utasError('utas.e.company')) &&
+      (utas.brand || utasError('utas.e.brand', $('#uBrand'))) &&
+      ($('#uParking').value.trim() || utasError('utas.e.parking', $('#uParking'))) &&
+      ($('#uDate').value || utasError('utas.e.date', $('#uDate'))) &&
+      (utas.time || utasError('utas.e.date', $('#uTime'))) &&
+      ($('#uName').value.trim() || utasError('utas.e.name', $('#uName'))) &&
+      (/^[79]\d{7}$/.test(utasPhone()) || utasError('utas.e.phone', $('#uPhone')));
+    if (!ok) return;
+    $$('.utas-form .bad').forEach((x) => x.classList.remove('bad'));
+    const box = $('#uErr');
+    box.className = 'u-err ok';
+    box.textContent = t('utas.ok');
+    box.hidden = false;
+    const url = waLink(company.wa, utasMessage(company));
+    const w = window.open(url, '_blank');
+    if (w) w.opener = null; else window.location.href = url;
+  }
+
   /* ---------- sync + render everything ---------- */
   function syncControls() {
     $('#heroService').value = $('#fService').value = state.service;
@@ -185,6 +294,7 @@
     renderSelects();
     renderServices();
     renderProviders();
+    renderUtas();
     $('#stProviders').textContent = PROVIDERS.length;
     $('#stGovs').textContent = new Set(PROVIDERS.flatMap((p) => p.govs)).size;
     $('#stServices').textContent = SERVICES.length;
@@ -211,6 +321,19 @@
     syncControls();
     renderProviders();
   });
+
+  $('#uBranch').addEventListener('change', (e) => { utas.branch = e.target.value; renderUtasCompanies(); });
+  $('#uBrand').addEventListener('change', (e) => { utas.brand = e.target.value; });
+  $('#uTime').addEventListener('change', (e) => { utas.time = e.target.value; });
+  $('#uServices').addEventListener('change', (e) => {
+    if (e.target.checked) utas.services.add(e.target.value); else utas.services.delete(e.target.value);
+    renderUtasCompanies();
+  });
+  $('#uCompanies').addEventListener('change', (e) => {
+    if (e.target.name === 'uCo') { utas.company = e.target.value; updateUtasTotal(); }
+  });
+  $('#utasForm').addEventListener('submit', utasSubmit);
+  $('#utasForm').addEventListener('input', (e) => { e.target.classList.remove('bad'); });
 
   document.addEventListener('click', (e) => {
     const svc = e.target.closest('[data-service]');
