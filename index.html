@@ -3,10 +3,58 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Car Care Services | Compare car wash & car service in Oman</title>
-  <meta name="description" content="Car Care Services lets you compare car wash and car service companies in Oman that come to your home or office. Then call or WhatsApp them.">
-  <meta name="theme-color" content="#C8102E">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Care Line (كير لاين) | Car wash & car service at your door in Oman</title>
+  <meta name="description" content="Care Line connects you with trusted car wash, oil change and car service companies across Oman that come to your home, office or university campus. Compare prices, then call or WhatsApp.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Care Line">
+  <meta name="theme-color" content="#1B2D5B">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Social sharing preview (Facebook, WhatsApp, X, LinkedIn). Replace YOUR-USERNAME/YOUR-REPO with your real GitHub Pages address. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Care Line">
+  <meta property="og:title" content="Care Line | Car wash & car service at your door in Oman">
+  <meta property="og:description" content="Compare trusted car wash and car service companies in Oman. They come to you. Book on WhatsApp.">
+  <meta property="og:image" content="https://YOUR-USERNAME.github.io/YOUR-REPO/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Care Line logo: a service van with car wash, oil and repair icons">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ar_OM">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Care Line | Car wash & car service at your door in Oman">
+  <meta name="twitter:description" content="Compare trusted car wash and car service companies in Oman. They come to you. Book on WhatsApp.">
+  <meta name="twitter:image" content="https://YOUR-USERNAME.github.io/YOUR-REPO/img/og-image.jpg">
+
+  <!-- Structured data for search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Care Line",
+        "alternateName": ["كير لاين", "Care Line Car Care Services"],
+        "url": "https://YOUR-USERNAME.github.io/YOUR-REPO/",
+        "logo": "https://YOUR-USERNAME.github.io/YOUR-REPO/img/logo-256.png",
+        "description": "Car wash, oil change and car service companies that come to your door across the Sultanate of Oman.",
+        "areaServed": { "@type": "Country", "name": "Oman" },
+        "sameAs": [
+          "https://www.instagram.com/careline.om/",
+          "https://www.tiktok.com/@careline.om",
+          "https://www.facebook.com/share/1ETecrbE7b/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "name": "Care Line",
+        "url": "https://YOUR-USERNAME.github.io/YOUR-REPO/",
+        "inLanguage": ["en", "ar"]
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,21 +62,29 @@
 </head>
 <body>
 
+<!-- Social icons (brand logos from Simple Icons, CC0) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></symbol>
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></symbol>
+</svg>
+
 <header class="header" id="top">
   <div class="wrap header-in">
-    <a href="#top" class="logo" aria-label="Car Care Services">
-      <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#C8102E"/><path d="M8 25v-5.5c0-1 .7-1.8 1.7-2l1.9-4.4c.4-.9 1.3-1.5 2.3-1.5h12.2c1 0 1.9.6 2.3 1.5l1.9 4.4c1 .2 1.7 1 1.7 2V25c0 .6-.4 1-1 1H9c-.6 0-1-.4-1-1z" fill="#fff"/><path d="M13 17.5l1.4-3.2h11.2l1.4 3.2z" fill="#C8102E"/><circle cx="13.5" cy="26.5" r="3" fill="#C8102E" stroke="#fff" stroke-width="1.8"/><circle cx="26.5" cy="26.5" r="3" fill="#C8102E" stroke="#fff" stroke-width="1.8"/></svg>
-      <span class="logo-text">Car Care Services<small>خدمات السيارات</small></span>
+    <a href="#top" class="logo" aria-label="Care Line">
+      <img class="logo-img" src="img/logo-badge.png" width="44" height="44" alt="Care Line logo">
+      <span class="logo-text">Care Line<small>كير لاين</small></span>
     </a>
-    <nav class="nav" id="nav">
-      <a href="#utas" class="nav-utas" data-i18n="utas.link"></a>
-      <a href="#services" data-i18n="nav.services"></a>
-      <a href="#providers" data-i18n="nav.providers"></a>
-      <a href="#how" data-i18n="nav.how"></a>
-      <a href="#join" data-i18n="nav.join"></a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#utas" class="nav-utas" data-i18n="utas.link">UTAS Students &amp; Staff</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#providers" data-i18n="nav.providers">Companies</a>
+      <a href="#how" data-i18n="nav.how">How it works</a>
+      <a href="#social" data-i18n="nav.social">Social media</a>
+      <a href="#join" data-i18n="nav.join">Join as a company</a>
     </nav>
     <div class="header-actions">
-      <button class="btn btn-ghost" id="langBtn" type="button"><span data-i18n="lang.btn"></span></button>
+      <button class="btn btn-ghost" id="langBtn" type="button"><span data-i18n="lang.btn">العربية</span></button>
       <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -39,25 +95,25 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="badge"><i class="dot"></i><span data-i18n="hero.badge"></span></span>
-        <h1 data-i18n-html="hero.title"></h1>
-        <p class="lead" data-i18n="hero.sub"></p>
+        <span class="badge"><i class="dot"></i><span data-i18n="hero.badge">Serving all of Oman</span></span>
+        <h1 data-i18n-html="hero.title">Car care that comes <em>to your door</em></h1>
+        <p class="lead" data-i18n="hero.sub">Compare trusted car wash and car service companies in Oman. Pick one, message them on WhatsApp, and they come to your home or office.</p>
 
         <form class="search" id="heroSearch">
           <label>
-            <span data-i18n="search.service"></span>
+            <span data-i18n="search.service">Service</span>
             <select id="heroService"></select>
           </label>
           <label>
-            <span data-i18n="search.gov"></span>
+            <span data-i18n="search.gov">Governorate</span>
             <select id="heroGov"></select>
           </label>
-          <button class="btn btn-primary" type="submit"><span data-i18n="search.btn"></span> <i class="arrow">→</i></button>
+          <button class="btn btn-primary" type="submit"><span data-i18n="search.btn">Find companies</span> <i class="arrow">→</i></button>
         </form>
 
         <a href="#utas" class="utas-cta">
           <img src="img/utas-logo.png" alt="UTAS" width="200" height="87">
-          <span><b data-i18n="utas.cta.t"></b><small data-i18n="utas.cta.s"></small></span>
+          <span><b data-i18n="utas.cta.t">UTAS student or staff?</b><small data-i18n="utas.cta.s">Order a car service at your campus</small></span>
           <i class="arrow">→</i>
         </a>
       </div>
@@ -81,10 +137,10 @@
     </div>
 
     <div class="wrap stats">
-      <div><b id="stProviders">0</b><span data-i18n="stats.providers"></span></div>
-      <div><b id="stGovs">0</b><span data-i18n="stats.govs"></span></div>
-      <div><b id="stServices">0</b><span data-i18n="stats.services"></span></div>
-      <div><b>0</b><span data-i18n="stats.km"></span></div>
+      <div><b id="stProviders">0</b><span data-i18n="stats.providers">Companies</span></div>
+      <div><b id="stGovs">0</b><span data-i18n="stats.govs">Governorates</span></div>
+      <div><b id="stServices">0</b><span data-i18n="stats.services">Services</span></div>
+      <div><b>0</b><span data-i18n="stats.km">Km you drive</span></div>
     </div>
   </section>
 
@@ -93,82 +149,82 @@
     <div class="wrap utas-grid">
       <div class="utas-intro">
         <img class="utas-logo" src="img/utas-logo.png" alt="University of Technology and Applied Sciences" width="200" height="87">
-        <span class="badge badge-utas" data-i18n="utas.badge"></span>
-        <h2 data-i18n="utas.title"></h2>
-        <p class="lead" data-i18n="utas.sub"></p>
+        <span class="badge badge-utas" data-i18n="utas.badge">For UTAS students &amp; staff</span>
+        <h2 data-i18n="utas.title">Car service at your UTAS campus</h2>
+        <p class="lead" data-i18n="utas.sub">Choose your branch and the services you need. A company comes to your campus car park while you are in class.</p>
         <ol class="utas-steps">
-          <li><span>1</span><b data-i18n="utas.t1"></b></li>
-          <li><span>2</span><b data-i18n="utas.t2"></b></li>
-          <li><span>3</span><b data-i18n="utas.t3"></b></li>
+          <li><span>1</span><b data-i18n="utas.t1">Pick your UTAS branch</b></li>
+          <li><span>2</span><b data-i18n="utas.t2">Choose one or more services</b></li>
+          <li><span>3</span><b data-i18n="utas.t3">Send the order on WhatsApp, that is it</b></li>
         </ol>
       </div>
 
       <form class="utas-form" id="utasForm" novalidate>
         <fieldset class="seg">
-          <legend data-i18n="utas.role"></legend>
-          <label><input type="radio" name="uRole" value="student" checked><span data-i18n="utas.student"></span></label>
-          <label><input type="radio" name="uRole" value="staff"><span data-i18n="utas.staff"></span></label>
+          <legend data-i18n="utas.role">I am a</legend>
+          <label><input type="radio" name="uRole" value="student" checked><span data-i18n="utas.student">Student</span></label>
+          <label><input type="radio" name="uRole" value="staff"><span data-i18n="utas.staff">Staff member</span></label>
         </fieldset>
 
         <label class="field">
-          <span data-i18n="utas.branch"></span>
+          <span data-i18n="utas.branch">UTAS branch</span>
           <select id="uBranch"></select>
         </label>
 
         <fieldset class="field">
-          <legend data-i18n="utas.services"></legend>
+          <legend data-i18n="utas.services">Services you need</legend>
           <div class="chips" id="uServices"></div>
         </fieldset>
 
         <div class="f-row">
           <label class="field">
-            <span data-i18n="utas.brand"></span>
+            <span data-i18n="utas.brand">Car brand</span>
             <select id="uBrand"></select>
           </label>
           <label class="field">
-            <span data-i18n="utas.plate"></span>
+            <span data-i18n="utas.plate">Plate number (optional)</span>
             <input type="text" id="uPlate" maxlength="12" autocomplete="off">
           </label>
         </div>
 
         <label class="field">
-          <span data-i18n="utas.parking"></span>
-          <input type="text" id="uParking" data-i18n-placeholder="utas.parkingPh" maxlength="80" autocomplete="off">
+          <span data-i18n="utas.parking">Where is your car on campus?</span>
+          <input type="text" id="uParking" data-i18n-placeholder="utas.parkingPh" placeholder="e.g. Main car park, near Building B" maxlength="80" autocomplete="off">
         </label>
 
         <div class="f-row">
           <label class="field">
-            <span data-i18n="utas.date"></span>
+            <span data-i18n="utas.date">Date</span>
             <input type="date" id="uDate">
           </label>
           <label class="field">
-            <span data-i18n="utas.time"></span>
+            <span data-i18n="utas.time">Time</span>
             <select id="uTime"></select>
           </label>
         </div>
 
         <div class="f-row">
           <label class="field">
-            <span data-i18n="utas.name"></span>
+            <span data-i18n="utas.name">Full name</span>
             <input type="text" id="uName" maxlength="60" autocomplete="name">
           </label>
           <label class="field">
-            <span data-i18n="utas.phone"></span>
+            <span data-i18n="utas.phone">Mobile number</span>
             <input type="tel" id="uPhone" inputmode="numeric" maxlength="12" placeholder="9X XXX XXX" autocomplete="tel">
           </label>
         </div>
 
         <div class="field">
-          <span class="lbl" data-i18n="utas.companies"></span>
+          <span class="lbl" data-i18n="utas.companies">Companies serving your branch</span>
           <div class="co-list" id="uCompanies"></div>
         </div>
 
         <div class="u-total" id="uTotal" hidden>
-          <span data-i18n="utas.est"></span>
+          <span data-i18n="utas.est">Estimated price</span>
           <b id="uTotalVal"></b>
         </div>
         <p class="u-err" id="uErr" role="alert" hidden></p>
-        <button class="btn btn-wa btn-lg" type="submit"><span id="uSendIcon"></span><span data-i18n="utas.send"></span></button>
+        <button class="btn btn-wa btn-lg" type="submit"><span id="uSendIcon"></span><span data-i18n="utas.send">Send order on WhatsApp</span></button>
       </form>
     </div>
   </section>
@@ -177,8 +233,8 @@
   <section class="section" id="services">
     <div class="wrap">
       <div class="sec-head">
-        <h2 data-i18n="services.title"></h2>
-        <p data-i18n="services.sub"></p>
+        <h2 data-i18n="services.title">Pick a service</h2>
+        <p data-i18n="services.sub">Everything your car needs, done where you park it.</p>
       </div>
       <div class="services" id="servicesGrid"></div>
     </div>
@@ -188,25 +244,25 @@
   <section class="section alt" id="providers">
     <div class="wrap">
       <div class="sec-head">
-        <h2 data-i18n="providers.title"></h2>
-        <p data-i18n="providers.sub"></p>
+        <h2 data-i18n="providers.title">Compare companies</h2>
+        <p data-i18n="providers.sub">Prices are starting prices in Omani Rial (OMR) for a standard sedan.</p>
       </div>
 
       <div class="filters">
-        <input type="search" id="fSearch" data-i18n-placeholder="filter.search" autocomplete="off">
+        <input type="search" id="fSearch" data-i18n-placeholder="filter.search" placeholder="Search company or area…" autocomplete="off">
         <select id="fService" aria-label="Service"></select>
         <select id="fGov" aria-label="Governorate"></select>
         <select id="fSort" aria-label="Sort"></select>
-        <label class="check"><input type="checkbox" id="fOpen"><span data-i18n="filter.open"></span></label>
+        <label class="check"><input type="checkbox" id="fOpen"><span data-i18n="filter.open">Open now</span></label>
       </div>
       <p class="count" id="count" aria-live="polite"></p>
 
       <div class="grid" id="providersGrid"></div>
       <div class="empty" id="empty" hidden>
         <div class="empty-ico">🔎</div>
-        <h3 data-i18n="empty.title"></h3>
-        <p data-i18n="empty.sub"></p>
-        <button class="btn btn-dark" id="resetBtn" type="button" data-i18n="reset"></button>
+        <h3 data-i18n="empty.title">No companies match</h3>
+        <p data-i18n="empty.sub">Try another service or governorate.</p>
+        <button class="btn btn-dark" id="resetBtn" type="button" data-i18n="reset">Clear filters</button>
       </div>
     </div>
   </section>
@@ -214,11 +270,57 @@
   <!-- HOW -->
   <section class="section" id="how">
     <div class="wrap">
-      <div class="sec-head"><h2 data-i18n="how.title"></h2></div>
+      <div class="sec-head"><h2 data-i18n="how.title">How it works</h2></div>
       <div class="steps">
-        <div class="step"><span class="num">1</span><h3 data-i18n="how.1.t"></h3><p data-i18n="how.1.d"></p></div>
-        <div class="step"><span class="num">2</span><h3 data-i18n="how.2.t"></h3><p data-i18n="how.2.d"></p></div>
-        <div class="step"><span class="num">3</span><h3 data-i18n="how.3.t"></h3><p data-i18n="how.3.d"></p></div>
+        <div class="step"><span class="num">1</span><h3 data-i18n="how.1.t">Choose</h3><p data-i18n="how.1.d">Select the service you need and your governorate.</p></div>
+        <div class="step"><span class="num">2</span><h3 data-i18n="how.2.t">Compare</h3><p data-i18n="how.2.d">Check ratings, prices and opening hours of local companies.</p></div>
+        <div class="step"><span class="num">3</span><h3 data-i18n="how.3.t">Message or call</h3><p data-i18n="how.3.d">Contact them on WhatsApp or by phone. They come to you.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL MEDIA / BLOG -->
+  <section class="section alt" id="social">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 data-i18n="social.title">Follow Care Line on social media</h2>
+        <p data-i18n="social.sub">Our latest posts from Instagram, TikTok and Facebook. Tap a post to read more.</p>
+      </div>
+
+      <ul class="soc-list">
+        <li><a class="soc soc-ig" href="https://www.instagram.com/careline.om/" target="_blank" rel="noopener noreferrer" aria-label="Care Line on Instagram">
+          <span class="soc-ico"><svg aria-hidden="true"><use href="#i-instagram"/></svg></span><span class="soc-txt"><b>Instagram</b><small>@careline.om</small></span></a></li>
+        <li><a class="soc soc-tt" href="https://www.tiktok.com/@careline.om" target="_blank" rel="noopener noreferrer" aria-label="Care Line on TikTok">
+          <span class="soc-ico"><svg aria-hidden="true"><use href="#i-tiktok"/></svg></span><span class="soc-txt"><b>TikTok</b><small>@careline.om</small></span></a></li>
+        <li><a class="soc soc-fb" href="https://www.facebook.com/share/1ETecrbE7b/" target="_blank" rel="noopener noreferrer" aria-label="Care Line on Facebook">
+          <span class="soc-ico"><svg aria-hidden="true"><use href="#i-facebook"/></svg></span><span class="soc-txt"><b>Facebook</b><small>Care Line</small></span></a></li>
+      </ul>
+
+      <div class="posts" id="postsGrid">
+        <article class="post">
+          <button class="post-btn" type="button" data-post="0">
+            <img src="img/social/post-1.jpg" width="800" height="800" loading="lazy" decoding="async" data-i18n-alt="post.1.alt" alt="Care Line: car care that comes to your door, serving all of Oman">
+            <span class="post-meta"><b data-i18n="post.1.t">Car care that comes to your door</b><small data-i18n="post.1.c">Compare car wash and car service companies across Oman, then book on WhatsApp in a minute.</small></span>
+          </button>
+        </article>
+        <article class="post">
+          <button class="post-btn" type="button" data-post="1">
+            <img src="img/social/post-2.jpg" width="800" height="800" loading="lazy" decoding="async" data-i18n-alt="post.2.alt" alt="How Care Line works: choose your service and branch, compare companies, send your order on WhatsApp">
+            <span class="post-meta"><b data-i18n="post.2.t">How Care Line works</b><small data-i18n="post.2.c">Choose your service and branch, compare companies and prices, then send your order on WhatsApp. Made for students &amp; staff.</small></span>
+          </button>
+        </article>
+        <article class="post">
+          <button class="post-btn" type="button" data-post="2">
+            <img src="img/social/post-3.jpg" width="800" height="800" loading="lazy" decoding="async" data-i18n-alt="post.3.alt" alt="Car care services right to your door, with a UTAS partner badge, book via WhatsApp">
+            <span class="post-meta"><b data-i18n="post.3.t">Car care services, right to your door</b><small data-i18n="post.3.c">Now serving all of Oman, with UTAS partner companies for students and staff.</small></span>
+          </button>
+        </article>
+        <article class="post">
+          <button class="post-btn" type="button" data-post="3">
+            <img src="img/social/post-4.jpg" width="800" height="800" loading="lazy" decoding="async" data-i18n-alt="post.4.alt" alt="How Car Care Services works in three steps: choose, compare local companies, message on WhatsApp">
+            <span class="post-meta"><b data-i18n="post.4.t">Three steps to book</b><small data-i18n="post.4.c">Pick your service and branch, compare local companies, and message them on WhatsApp to book.</small></span>
+          </button>
+        </article>
       </div>
     </div>
   </section>
@@ -228,10 +330,10 @@
     <div class="wrap">
       <div class="join">
         <div>
-          <h2 data-i18n="join.title"></h2>
-          <p data-i18n="join.sub"></p>
+          <h2 data-i18n="join.title">Own a car wash or car service company?</h2>
+          <p data-i18n="join.sub">List your business on Care Line and get new customers who are ready to book.</p>
         </div>
-        <a class="btn btn-wa btn-lg" id="joinBtn" target="_blank" rel="noopener"><span data-i18n="join.btn"></span></a>
+        <a class="btn btn-wa btn-lg" id="joinBtn" target="_blank" rel="noopener"><span data-i18n="join.btn">Contact us on WhatsApp</span></a>
       </div>
     </div>
   </section>
@@ -239,8 +341,21 @@
 
 <footer class="footer">
   <div class="wrap footer-in">
-    <div class="logo-text light">Car Care Services<small>خدمات السيارات</small></div>
-    <p data-i18n="footer.tag"></p>
+    <div class="foot-brand">
+      <img class="logo-img" src="img/logo-badge.png" width="48" height="48" alt="Care Line logo" loading="lazy">
+      <div>
+        <div class="logo-text light">Care Line<small>كير لاين</small></div>
+        <p data-i18n="footer.tag">Compare car wash &amp; car service companies across Oman.</p>
+      </div>
+    </div>
+    <div class="foot-social">
+      <span data-i18n="footer.follow">Follow us</span>
+      <ul>
+        <li><a class="fs fs-ig" href="https://www.instagram.com/careline.om/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-instagram"/></svg></a></li>
+        <li><a class="fs fs-tt" href="https://www.tiktok.com/@careline.om" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg aria-hidden="true"><use href="#i-tiktok"/></svg></a></li>
+        <li><a class="fs fs-fb" href="https://www.facebook.com/share/1ETecrbE7b/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg aria-hidden="true"><use href="#i-facebook"/></svg></a></li>
+      </ul>
+    </div>
   </div>
 </footer>
 

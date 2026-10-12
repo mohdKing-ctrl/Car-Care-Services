@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   Car Care Services – sample data
+   Care Line – sample data
    All companies below are FICTIONAL examples for the college project.
    To change a contact number, edit the `wa` field (country code 968 +
    8-digit number, no "+" or spaces). The call and WhatsApp buttons
@@ -187,4 +187,11 @@ const TIME_SLOTS = [
   { v: '10-12', en: '10:00 AM – 12:00 PM', ar: '10:00 ص – 12:00 م' },
   { v: '12-14', en: '12:00 – 2:00 PM',     ar: '12:00 – 2:00 م' },
   { v: '14-16', en: '2:00 – 4:00 PM',      ar: '2:00 – 4:00 م' }
+];
+
+/* Social media accounts (also written in index.html: social section, footer, structured data) */
+const SOCIAL = [
+  { key: 'instagram', name: 'Instagram', cls: 'soc-ig', url: 'https://www.instagram.com/careline.om/' },
+  { key: 'tiktok',    name: 'TikTok',    cls: 'soc-tt', url: 'https://www.tiktok.com/@careline.om' },
+  { key: 'facebook',  name: 'Facebook',  cls: 'soc-fb', url: 'https://www.facebook.com/share/1ETecrbE7b/' }
 ];

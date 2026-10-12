@@ -62,6 +62,7 @@
     $$('[data-i18n]').forEach((el) => (el.textContent = t(el.dataset.i18n)));
     $$('[data-i18n-html]').forEach((el) => (el.innerHTML = t(el.dataset.i18nHtml)));
     $$('[data-i18n-placeholder]').forEach((el) => (el.placeholder = t(el.dataset.i18nPlaceholder)));
+    $$('[data-i18n-alt]').forEach((el) => (el.alt = t(el.dataset.i18nAlt)));
     $('#joinBtn').href = waLink(TEAM_WHATSAPP, t('msg.join'));
   }
 
@@ -168,6 +169,20 @@
       '<div class="m-h">' + t('modal.services') + '</div><div class="plist">' + rows + '</div>' +
       '<div class="m-actions"><a class="btn btn-call" href="tel:+' + p.wa + '">' + phoneIcon + fmtPhone(p.wa) + '</a>' +
       '<a class="btn btn-wa" target="_blank" rel="noopener" href="' + waLink(p.wa, bookMsg(p, state.service)) + '">' + waIcon + t('card.wa') + '</a></div>';
+    $('#modal').hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('#mClose').focus();
+  }
+  function openPost(i) {
+    const n = i + 1;
+    const links = SOCIAL.map((s) =>
+      '<a class="soc-mini ' + s.cls + '" target="_blank" rel="noopener noreferrer" href="' + s.url + '" aria-label="' + t('social.open', { platform: s.name }) + '">' +
+      '<svg aria-hidden="true"><use href="#i-' + s.key + '"/></svg><span>' + s.name + '</span></a>').join('');
+    $('#mBody').innerHTML =
+      '<img class="post-big" src="img/social/post-' + n + '.jpg" alt="' + t('post.' + n + '.alt') + '" width="800" height="800">' +
+      '<h3 id="mTitle" class="post-h">' + t('post.' + n + '.t') + '</h3>' +
+      '<p class="m-desc">' + t('post.' + n + '.c') + '</p>' +
+      '<div class="soc-mini-row">' + links + '</div>';
     $('#modal').hidden = false;
     document.body.style.overflow = 'hidden';
     $('#mClose').focus();
@@ -340,6 +355,8 @@
     if (svc) { state.service = svc.dataset.service; syncControls(); renderProviders(); goToProviders(); return; }
     const det = e.target.closest('[data-details]');
     if (det) { openDetails(det.dataset.details); return; }
+    const post = e.target.closest('[data-post]');
+    if (post) { openPost(Number(post.dataset.post)); return; }
     if (e.target === $('#modal')) closeModal();
     if (e.target.closest('#nav a')) closeMenu();
   });
