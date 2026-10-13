@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin dashboard | Care Line</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style id="gate">html{visibility:hidden}</style>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dash.css">
+  <script src="js/accounts.js"></script>
+  <script src="js/auth.js"></script>
+  <script>Auth.require('admin');</script>
+</head>
+<body class="dash">
+
+<header class="dh">
+  <div class="wrap">
+    <img class="logo-img" src="img/logo-badge.png" width="40" height="40" alt="Care Line logo">
+    <h1>Admin dashboard<small>Care Line control centre</small></h1>
+    <span class="sp"></span>
+    <span class="chip-u" id="who">admin</span>
+    <a class="btn btn-ghost btn-sm" href="index.html" target="_blank" rel="noopener">View website</a>
+    <button class="btn btn-dark btn-sm" id="logout" type="button">Log out</button>
+  </div>
+</header>
+
+<nav class="tabs-d" aria-label="Dashboard sections">
+  <div class="wrap" id="tabs">
+    <button type="button" data-tab="overview" class="on">Overview</button>
+    <button type="button" data-tab="companies">Companies</button>
+    <button type="button" data-tab="orders">Customers &amp; orders</button>
+    <button type="button" data-tab="seo">SEO text</button>
+    <button type="button" data-tab="accounts">Accounts</button>
+  </div>
+</nav>
+
+<main class="wrap dmain">
+
+  <!-- OVERVIEW -->
+  <section class="tabpanel" id="tab-overview">
+    <div class="panel">
+      <div class="filters-d">
+        <label class="note-s" for="period"><b>Period</b></label>
+        <select id="period"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
+        <label class="check"><input type="checkbox" id="useSample" checked><span>Include sample history</span></label>
+        <span class="note-s" id="sampleNote"></span>
+      </div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div id="mainChart"></div>
+    <div class="g2">
+      <div id="topCompanies"></div>
+      <div id="topServices"></div>
+    </div>
+  </section>
+
+  <!-- COMPANIES -->
+  <section class="tabpanel" id="tab-companies" hidden>
+    <div class="panel">
+      <h2>All companies</h2>
+      <p class="sub">Every partner company with its activity for the selected period. Click a row for the full details.</p>
+      <div class="filters-d" style="margin-bottom:14px">
+        <input type="search" id="coSearch" placeholder="Search company or governorate…" autocomplete="off">
+        <select id="coPeriod"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
+        <button class="btn btn-ghost btn-sm" id="coCsv" type="button">Export CSV</button>
+      </div>
+      <div id="coTable"></div>
+    </div>
+  </section>
+
+  <!-- ORDERS -->
+  <section class="tabpanel" id="tab-orders" hidden>
+    <div class="panel">
+      <h2>Customers &amp; orders</h2>
+      <p class="sub">Customers who sent an order through the UTAS students &amp; staff form. Orders made on this browser appear as live rows; the rest is sample data.</p>
+      <div class="filters-d" style="margin-bottom:14px">
+        <input type="search" id="orSearch" placeholder="Search customer or phone…" autocomplete="off">
+        <select id="orCompany"></select>
+        <select id="orPeriod"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
+        <button class="btn btn-ghost btn-sm" id="orCsv" type="button">Export CSV</button>
+      </div>
+      <div id="orTable"></div>
+    </div>
+  </section>
+
+  <!-- SEO -->
+  <section class="tabpanel" id="tab-seo" hidden>
+    <div class="seo-grid">
+      <div class="panel">
+        <h2>SEO text editor</h2>
+        <p class="sub">Write the words that search engines and social media show for the website. Type here, press <b>Save &amp; apply</b>, then open the website to see it.</p>
+
+        <div class="fld-d"><label for="sTitle"><span>Page title <small class="hint">(shown as the blue link on Google and in the browser tab)</small></span><span class="cnt" id="cTitle"></span></label>
+          <input type="text" id="sTitle" maxlength="120" autocomplete="off"></div>
+        <div class="fld-d"><label for="sDesc"><span>Meta description <small class="hint">(the grey text under the link)</small></span><span class="cnt" id="cDesc"></span></label>
+          <textarea id="sDesc" maxlength="320"></textarea></div>
+        <div class="fld-d"><label for="sKeys"><span>Keywords <small class="hint">(comma separated)</small></span></label>
+          <textarea id="sKeys" style="min-height:70px"></textarea></div>
+        <div class="fld-d"><label for="sOgTitle"><span>Share title <small class="hint">(WhatsApp / Facebook card)</small></span><span class="cnt" id="cOgT"></span></label>
+          <input type="text" id="sOgTitle" maxlength="120" autocomplete="off"></div>
+        <div class="fld-d"><label for="sOgDesc"><span>Share description</span><span class="cnt" id="cOgD"></span></label>
+          <textarea id="sOgDesc" maxlength="300" style="min-height:70px"></textarea></div>
+
+        <div class="row-d">
+          <button class="btn btn-primary" id="seoSave" type="button">Save &amp; apply</button>
+          <button class="btn btn-ghost" id="seoDl" type="button">Download updated index.html</button>
+          <button class="btn btn-ghost btn-sm" id="seoReset" type="button">Reset to website text</button>
+          <a class="btn btn-ghost btn-sm" href="index.html" target="_blank" rel="noopener">Open website</a>
+        </div>
+        <p class="okmsg" id="seoMsg" hidden style="margin-top:14px"></p>
+        <p class="warnmsg" style="margin-top:14px"><b>Important:</b> <b>Save &amp; apply</b> shows the new text on this browser right away, which is perfect for a demonstration. To change what Google and other visitors see, press <b>Download updated index.html</b> and upload that file to GitHub. (A static website cannot change itself on the server.)</p>
+        <p class="note-s" style="margin-top:12px">More tools (audit score, sitemap, robots.txt): <a href="seo-admin.html" style="color:var(--utas);font-weight:700">Advanced SEO tools →</a></p>
+      </div>
+
+      <div style="display:grid;gap:20px">
+        <div class="panel">
+          <h2>Google preview</h2>
+          <p class="sub">How your text can look in search results.</p>
+          <div class="serp" id="serp"></div>
+        </div>
+        <div class="panel">
+          <h2>Tags on the website now</h2>
+          <p class="sub">Read from <code>index.html</code>, with your saved text applied.</p>
+          <div class="taglist" id="liveTags"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCOUNTS -->
+  <section class="tabpanel" id="tab-accounts" hidden>
+    <div class="panel">
+      <h2>Accounts</h2>
+      <p class="sub">The administrator and one login for each company. Passwords are never shown here (only stored as hashes).</p>
+      <div id="acTable"></div>
+    </div>
+    <div class="panel">
+      <h2>Change a password</h2>
+      <p class="sub">Pick an account and type a new password. The tool prints a line to paste into <code>js/accounts.js</code>, replacing that account's old line.</p>
+      <div class="filters-d" style="margin-bottom:12px">
+        <select id="pwUser"></select>
+        <div class="pw" style="min-width:240px"><input type="password" id="pwNew" placeholder="New password (8+ characters)" autocomplete="new-password" style="width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font:inherit"></div>
+        <button class="btn btn-dark btn-sm" id="pwGo" type="button">Create line</button>
+      </div>
+      <pre class="code" id="pwOut" hidden></pre>
+      <button class="btn btn-ghost btn-sm" id="pwCopy" type="button" hidden style="margin-top:10px">Copy</button>
+    </div>
+    <div class="panel">
+      <h2>Clear live data</h2>
+      <p class="sub">Deletes the visits, clicks and orders recorded on this browser (sample history stays).</p>
+      <button class="btn btn-ghost btn-sm" id="clearLive" type="button">Clear live data on this browser</button>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="dModal" hidden>
+  <div class="sheet wide" role="dialog" aria-modal="true" aria-labelledby="dTitle">
+    <button class="x" id="dClose" type="button" aria-label="Close">×</button>
+    <div id="dBody"></div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/track.js"></script>
+<script src="js/dash.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

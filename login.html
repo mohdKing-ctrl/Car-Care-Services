@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | Care Line</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dash.css">
+</head>
+<body class="dash">
+<div class="login-wrap">
+  <main class="login-card">
+    <div class="brand">
+      <img class="logo-img" src="img/logo-badge.png" width="48" height="48" alt="Care Line logo">
+      <div class="logo-text">Care Line<small>كير لاين</small></div>
+    </div>
+    <h1>Sign in</h1>
+    <p class="lead">For the administrator and partner companies. Each company sees only its own dashboard.</p>
+
+    <div class="login-err" id="err" role="alert" hidden></div>
+
+    <form id="form" novalidate>
+      <div class="fld-d">
+        <label for="u">Username</label>
+        <input type="text" id="u" autocomplete="username" autocapitalize="none" spellcheck="false" autofocus>
+      </div>
+      <div class="fld-d">
+        <label for="p">Password</label>
+        <div class="pw">
+          <input type="password" id="p" autocomplete="current-password">
+          <button type="button" id="show" aria-label="Show password">Show</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-lg" type="submit" id="go">Sign in</button>
+    </form>
+
+    <p class="login-foot"><a href="index.html">← Back to the website</a><br>
+    Demo login for a college project. Your session ends when you close the tab.</p>
+  </main>
+</div>
+
+<script src="js/accounts.js"></script>
+<script src="js/auth.js"></script>
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const params = new URLSearchParams(location.search);
+  const safeNext = (n) => (/^[\w-]+\.html(\?[\w=&%.\-]*)?(#[\w-]*)?$/.test(n || '') ? n : '');
+
+  // already signed in? go straight to the right dashboard
+  const existing = Auth.session();
+  if (existing) route(existing);
+
+  function route(s) {
+    const next = safeNext(params.get('next'));
+    if (s.role === 'admin') location.replace(next || 'admin.html');
+    else location.replace(next && next.startsWith('portal.html') ? next : 'portal.html');
+  }
+  function showErr(msg) { const e = $('#err'); e.textContent = msg; e.hidden = false; }
+
+  $('#show').addEventListener('click', () => {
+    const p = $('#p'); const hide = p.type === 'password';
+    p.type = hide ? 'text' : 'password'; $('#show').textContent = hide ? 'Hide' : 'Show';
+  });
+
+  $('#form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('#err').hidden = true;
+    const left = Auth.lockLeft();
+    if (left > 0) return showErr('Too many wrong attempts. Please wait ' + left + ' seconds and try again.');
+    const user = $('#u').value, pass = $('#p').value;
+    if (!user.trim() || !pass) return showErr('Please enter your username and password.');
+    $('#go').disabled = true; $('#go').textContent = 'Checking…';
+    try {
+      const s = await Auth.login(user, pass);
+      if (s) return route(s);
+      showErr(Auth.lockLeft() > 0 ? 'Too many wrong attempts. Please wait 30 seconds.' : 'Wrong username or password.');
+    } catch (err) {
+      showErr('This browser blocks secure login on this address. Open the website over https (GitHub Pages) or http://localhost.');
+    }
+    $('#go').disabled = false; $('#go').textContent = 'Sign in'; $('#p').value = ''; $('#p').focus();
+  });
+})();
+</script>
+</body>
+</html>

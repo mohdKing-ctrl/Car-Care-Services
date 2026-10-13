@@ -28,6 +28,8 @@
   const fmtPhone = (wa) => '+' + wa.slice(0, 3) + ' ' + wa.slice(3, 7) + ' ' + wa.slice(7);
   const waLink = (num, text) => 'https://wa.me/' + num + '?text=' + encodeURIComponent(text);
   const nameOf = (p) => pick(p.name, p.nameAr);
+  // visit / click tracker (js/track.js). Harmless no-op if it is missing.
+  const T = typeof Track !== 'undefined' ? Track : { log() {}, order() {}, visit() {} };
   // Company avatar: the UTAS partner shows the UTAS logo, others show coloured initials
   const avatarHTML = (p) => p.logo
     ? '<div class="avatar logo-av"><img src="' + p.logo + '" alt="UTAS"></div>'
@@ -123,7 +125,7 @@
       (more > 0 ? '<span class="tag">+' + more + '</span>' : '');
     const areas = p.areas.slice(0, 3).map((a) => pick(a[0], a[1])).join(isAr() ? '، ' : ', ');
     const from = minPrice(p, state.service);
-    return '<article class="card">' +
+    return '<article class="card" data-pid="' + p.id + '">' +
       '<div class="card-top">' +
         '' + avatarHTML(p) + '' +
         '<div><h3>' + nameOf(p) + '</h3>' +
@@ -135,8 +137,8 @@
       '<div class="price"><div><small>' + t('card.from') + '</small> <b>' + from.toFixed(3) + ' <small>' + t('cur') + '</small></b></div>' +
         '<button type="button" class="link" data-details="' + p.id + '">' + t('card.prices') + '</button></div>' +
       '<div class="actions">' +
-        '<a class="btn btn-call" href="tel:+' + p.wa + '">' + phoneIcon + t('card.call') + '</a>' +
-        '<a class="btn btn-wa" target="_blank" rel="noopener" href="' + waLink(p.wa, bookMsg(p, state.service)) + '">' + waIcon + t('card.wa') + '</a>' +
+        '<a class="btn btn-call" data-act="call" data-pid="' + p.id + '" href="tel:+' + p.wa + '">' + phoneIcon + t('card.call') + '</a>' +
+        '<a class="btn btn-wa" data-act="wa" data-pid="' + p.id + '" target="_blank" rel="noopener" href="' + waLink(p.wa, bookMsg(p, state.service)) + '">' + waIcon + t('card.wa') + '</a>' +
       '</div>' +
     '</article>';
   }
@@ -147,6 +149,25 @@
     $('#providersGrid').innerHTML = list.map(cardHTML).join('');
     $('#empty').hidden = list.length > 0;
     $('#providersGrid').hidden = list.length === 0;
+    trackImpressions();
+  }
+
+  // count one "view" per company per page load, when its card is at least half visible
+  const seenCards = new Set();
+  let cardObserver = null;
+  function trackImpressions() {
+    if (!('IntersectionObserver' in window)) return;
+    if (!cardObserver) {
+      cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const id = en.target.dataset.pid;
+          cardObserver.unobserve(en.target);
+          if (id && !seenCards.has(id)) { seenCards.add(id); T.log('imp', id); }
+        });
+      }, { threshold: 0.5 });
+    }
+    $$('#providersGrid .card[data-pid]').forEach((c) => { if (!seenCards.has(c.dataset.pid)) cardObserver.observe(c); });
   }
 
   /* ---------- modal ---------- */
@@ -157,8 +178,9 @@
       const s = svcByKey(k);
       return '<div class="prow"><span>' + s.icon + '</span><span class="n">' + svcName(s) + '</span>' +
         '<span class="p">' + p.services[k].toFixed(3) + ' <small>' + t('cur') + '</small></span>' +
-        '<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="' + waLink(p.wa, bookMsg(p, k)) + '">' + t('modal.book') + '</a></div>';
+        '<a class="btn btn-wa btn-sm" data-act="svc" data-pid="' + p.id + '" data-svc="' + k + '" target="_blank" rel="noopener" href="' + waLink(p.wa, bookMsg(p, k)) + '">' + t('modal.book') + '</a></div>';
     }).join('');
+    T.log('open', id);
     $('#mBody').innerHTML =
       '<div class="card-top">' + avatarHTML(p) + '' +
       '<div><h3 id="mTitle">' + nameOf(p) + '</h3><div class="meta"><span class="rate"><i>★</i> ' + p.rating.toFixed(1) + '</span><span>(' + p.reviews + ')</span>' +
@@ -167,8 +189,8 @@
       '<div class="m-h">' + t('modal.hours') + '</div><div>' + hoursText(p) + ' · ' + t('card.reply', { n: p.reply }) + '</div>' +
       '<div class="m-h">' + t('card.serves') + '</div><div class="tags">' + p.areas.map((a) => '<span class="tag">' + pick(a[0], a[1]) + '</span>').join('') + '</div>' +
       '<div class="m-h">' + t('modal.services') + '</div><div class="plist">' + rows + '</div>' +
-      '<div class="m-actions"><a class="btn btn-call" href="tel:+' + p.wa + '">' + phoneIcon + fmtPhone(p.wa) + '</a>' +
-      '<a class="btn btn-wa" target="_blank" rel="noopener" href="' + waLink(p.wa, bookMsg(p, state.service)) + '">' + waIcon + t('card.wa') + '</a></div>';
+      '<div class="m-actions"><a class="btn btn-call" data-act="call" data-pid="' + p.id + '" href="tel:+' + p.wa + '">' + phoneIcon + fmtPhone(p.wa) + '</a>' +
+      '<a class="btn btn-wa" data-act="wa" data-pid="' + p.id + '" target="_blank" rel="noopener" href="' + waLink(p.wa, bookMsg(p, state.service)) + '">' + waIcon + t('card.wa') + '</a></div>';
     $('#modal').hidden = false;
     document.body.style.overflow = 'hidden';
     $('#mClose').focus();
@@ -292,6 +314,19 @@
     box.textContent = t('utas.ok');
     box.hidden = false;
     const url = waLink(company.wa, utasMessage(company));
+    T.order({
+      company: company.id,
+      name: $('#uName').value.trim(),
+      phone: '+968 ' + utasPhone(),
+      role: $('input[name="uRole"]:checked').value,
+      branch: utas.branch,
+      services: Array.from(utas.services),
+      brand: utas.brand,
+      plate: $('#uPlate').value.trim(),
+      parking: $('#uParking').value.trim(),
+      when: $('#uDate').value + ' ' + utas.time,
+      total: utasTotal(company)
+    });
     const w = window.open(url, '_blank');
     if (w) w.opener = null; else window.location.href = url;
   }
@@ -322,11 +357,12 @@
     e.preventDefault();
     state.service = $('#heroService').value;
     state.gov = $('#heroGov').value;
+    if (state.service) T.log('svcfilter', null, state.service);
     syncControls();
     renderProviders();
     goToProviders();
   });
-  $('#fService').addEventListener('change', (e) => { state.service = e.target.value; syncControls(); renderProviders(); });
+  $('#fService').addEventListener('change', (e) => { state.service = e.target.value; if (state.service) T.log('svcfilter', null, state.service); syncControls(); renderProviders(); });
   $('#fGov').addEventListener('change', (e) => { state.gov = e.target.value; syncControls(); renderProviders(); });
   $('#fSort').addEventListener('change', (e) => { state.sort = e.target.value; renderProviders(); });
   $('#fOpen').addEventListener('change', (e) => { state.openOnly = e.target.checked; renderProviders(); });
@@ -351,8 +387,10 @@
   $('#utasForm').addEventListener('input', (e) => { e.target.classList.remove('bad'); });
 
   document.addEventListener('click', (e) => {
+    const act = e.target.closest('[data-act]');
+    if (act) T.log(act.dataset.act, act.dataset.pid, act.dataset.svc);
     const svc = e.target.closest('[data-service]');
-    if (svc) { state.service = svc.dataset.service; syncControls(); renderProviders(); goToProviders(); return; }
+    if (svc) { state.service = svc.dataset.service; T.log('svcfilter', null, state.service); syncControls(); renderProviders(); goToProviders(); return; }
     const det = e.target.closest('[data-details]');
     if (det) { openDetails(det.dataset.details); return; }
     const post = e.target.closest('[data-post]');
@@ -377,5 +415,6 @@
     burger.setAttribute('aria-expanded', String(open));
   });
 
+  T.visit();
   renderAll();
 })();

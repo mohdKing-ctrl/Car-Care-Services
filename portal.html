@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Company dashboard | Care Line</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style id="gate">html{visibility:hidden}</style>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dash.css">
+  <script src="js/accounts.js"></script>
+  <script src="js/auth.js"></script>
+  <script>Auth.require(['company', 'admin']);</script>
+</head>
+<body class="dash">
+
+<header class="dh">
+  <div class="wrap">
+    <img class="logo-img" src="img/logo-badge.png" width="40" height="40" alt="Care Line logo">
+    <h1 id="hTitle">Company dashboard<small id="hSub">Care Line partner</small></h1>
+    <span class="sp"></span>
+    <span class="chip-u" id="who"></span>
+    <a class="btn btn-ghost btn-sm" id="backAdmin" href="admin.html#companies" hidden>← Back to admin</a>
+    <button class="btn btn-dark btn-sm" id="logout" type="button">Log out</button>
+  </div>
+</header>
+
+<main class="wrap dmain">
+  <div class="warnmsg" id="adminBanner" hidden>You are viewing this dashboard as the administrator.</div>
+
+  <div class="panel" id="profile"></div>
+
+  <div class="panel">
+    <div class="filters-d">
+      <label class="note-s" for="period"><b>Period</b></label>
+      <select id="period"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
+      <label class="check"><input type="checkbox" id="useSample" checked><span>Include sample history</span></label>
+      <span class="note-s" id="sampleNote"></span>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+  <div id="mainChart"></div>
+  <div class="g2">
+    <div id="svcBars"></div>
+    <div id="howBars"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Your customers</h2>
+    <p class="sub">Students and staff who sent you an order through the UTAS form. Contact them on the phone number they gave.</p>
+    <div id="orders"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Your listing on the website</h2>
+    <p class="sub">This is what customers see. To change prices, hours or services, message the Care Line team.</p>
+    <div id="listing"></div>
+    <div class="row-d" style="margin-top:14px">
+      <a class="btn btn-ghost btn-sm" target="_blank" rel="noopener" href="index.html#providers">See my card on the website</a>
+      <a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="https://wa.me/96891000000?text=Hello%20Care%20Line%20team%2C%20I%20would%20like%20to%20update%20my%20company%20listing.">Message the Care Line team</a>
+    </div>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/track.js"></script>
+<script src="js/dash.js"></script>
+<script src="js/portal.js"></script>
+</body>
+</html>

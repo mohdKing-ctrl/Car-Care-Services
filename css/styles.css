@@ -335,3 +335,8 @@ html[lang="ar"] .m-h{text-transform:none;letter-spacing:0}
 
 @media (max-width:960px){.posts{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){.posts{grid-template-columns:1fr}.soc{width:100%}.soc-list li{flex:1 1 100%}}
+.foot-seo{flex-basis:100%;font-size:.8rem;color:#8E9BB0;text-decoration:underline;text-underline-offset:3px}
+.foot-seo:hover{color:#fff}
+.join-login{margin-top:10px;font-size:.9rem}
+.join-login a{color:#C5CFDF;text-decoration:underline;text-underline-offset:3px}
+.join-login a:hover{color:#fff}

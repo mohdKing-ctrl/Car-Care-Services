@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEO Control Panel | Care Line</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style id="gate">html{visibility:hidden}</style>
+  <script src="js/accounts.js"></script>
+  <script src="js/auth.js"></script>
+  <script>Auth.require("admin");</script>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body{background:#F4F6FA}
+    .a-head{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+    .a-head .wrap{display:flex;align-items:center;gap:14px;height:64px}
+    .a-head h1{font-size:1.05rem;letter-spacing:-.01em;margin:0}
+    .a-head .sp{flex:1}
+    .saved{font-size:.82rem;color:var(--muted)}
+    .a-main{padding:28px 0 64px;display:grid;gap:22px}
+    .card-a{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .card-a h2{font-size:1.1rem;margin:0 0 4px;letter-spacing:-.01em}
+    .card-a .sub{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+
+    .top{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
+    .ring{position:relative;width:132px;height:132px}
+    .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+    .ring circle{fill:none;stroke-width:12;stroke-linecap:round}
+    .ring .bg{stroke:#E8ECF4}
+    .ring .fg{stroke:var(--green);transition:stroke-dashoffset .6s,stroke .3s}
+    .ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:2rem;font-weight:800}
+    .ring b small{font-size:.8rem;color:var(--muted);font-weight:600;display:block;text-align:center;margin-top:-6px}
+    .sum{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+    .sum span{padding:6px 12px;border-radius:99px;font-weight:700;font-size:.85rem}
+    .sum .p{background:#E3F4EC;color:#14693F}.sum .w{background:#FFF3D6;color:#8A5A00}.sum .f{background:#FDECEE;color:var(--brand-d)}
+
+    .cols{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:22px;align-items:start}
+    .sticky{position:sticky;top:84px;display:grid;gap:22px}
+    .fld{display:grid;gap:6px;margin-bottom:14px}
+    .fld label{font-weight:700;font-size:.86rem;display:flex;justify-content:space-between;gap:8px}
+    .fld input[type=text],.fld textarea{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:.93rem;background:#fff}
+    .fld textarea{min-height:88px;resize:vertical}
+    .fld input[type=color]{width:56px;height:38px;border:1.5px solid var(--line);border-radius:10px;padding:2px;background:#fff}
+    .fld .hint{color:var(--muted);font-size:.8rem}
+    .cnt{font-weight:700;font-size:.78rem;color:var(--muted)}
+    .cnt.ok{color:#14693F}.cnt.bad{color:var(--brand-d)}
+    .chk{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;font-weight:600;font-size:.92rem}
+    .chk input{width:18px;height:18px;margin-top:3px;accent-color:var(--green)}
+
+    .serp{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+    .serp .u{display:flex;gap:10px;align-items:center;font-size:.82rem;color:#202124}
+    .serp .u img{width:26px;height:26px;border-radius:50%;border:1px solid var(--line)}
+    .serp .u small{color:#5f6368;display:block;font-size:.76rem}
+    .serp .t{color:#1a0dab;font-size:1.2rem;line-height:1.3;margin:6px 0 4px;font-family:Arial,sans-serif}
+    .serp .d{color:#4d5156;font-size:.88rem;line-height:1.5;font-family:Arial,sans-serif}
+    .serp.m{max-width:360px}
+    .toggle{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}
+    .toggle button{border:0;background:#fff;padding:7px 14px;font-weight:700;cursor:pointer;font-size:.85rem}
+    .toggle button.on{background:var(--ink);color:#fff}
+    .share{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+    .share img{width:100%;aspect-ratio:1200/630;object-fit:cover;background:var(--alt);display:block}
+    .share div{padding:12px 14px;background:#F0F2F5}
+    .share small{color:#65676B;text-transform:uppercase;font-size:.72rem;letter-spacing:.04em}
+    .share b{display:block;font-size:.98rem;margin:2px 0}
+    .share span{color:#65676B;font-size:.85rem}
+
+    .audit{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+    .audit li{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;align-items:start}
+    .audit .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.8rem}
+    .audit .pass .ic{background:var(--green)}.audit .warn .ic{background:#E8A317}.audit .fail .ic{background:var(--brand)}
+    .audit b{font-size:.92rem}.audit span{display:block;color:var(--muted);font-size:.84rem}
+    table.kw{width:100%;border-collapse:collapse;font-size:.88rem}
+    table.kw th,table.kw td{text-align:start;padding:9px 10px;border-bottom:1px solid var(--line)}
+    table.kw th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+    .yes{color:#14693F;font-weight:800}.no{color:#b3b8c4}
+    .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+    .tabs button{border:1.5px solid var(--line);background:#fff;padding:8px 14px;border-radius:10px;font-weight:700;cursor:pointer;font-size:.86rem}
+    .tabs button.on{background:var(--utas);border-color:var(--utas);color:#fff}
+    pre.code{background:#0E1A2B;color:#D6E2F5;border-radius:14px;padding:16px;overflow:auto;max-height:380px;font-size:.78rem;line-height:1.55;margin:0 0 12px;white-space:pre-wrap;word-break:break-word;direction:ltr;text-align:left}
+    .row{display:flex;flex-wrap:wrap;gap:10px}
+    .steps-a{margin:0;padding-inline-start:20px;display:grid;gap:8px}
+    .note{background:#FFF7EA;border:1px solid #F8D7AA;border-radius:12px;padding:12px 14px;font-size:.88rem;color:#7A4600}
+    @media (max-width:960px){.cols{grid-template-columns:1fr}.sticky{position:static}}
+    @media (max-width:560px){.top{grid-template-columns:1fr;justify-items:center;text-align:center}.sum{justify-content:center}}
+  </style>
+</head>
+<body>
+
+<header class="a-head">
+  <div class="wrap">
+    <img class="logo-img" src="img/logo-badge.png" width="40" height="40" alt="Care Line">
+    <h1>SEO Control Panel <small style="color:var(--muted);font-weight:600">· Care Line</small></h1>
+    <span class="sp"></span>
+    <span class="saved" id="saved">Draft saved in this browser</span>
+    <a class="btn btn-ghost btn-sm" href="admin.html#seo">← Back to admin</a>
+  </div>
+</header>
+
+<main class="wrap a-main">
+
+  <!-- SCORE -->
+  <section class="card-a top">
+    <div class="ring" aria-label="SEO score">
+      <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="ringFg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
+      <b id="score">–<small>/ 100</small></b>
+    </div>
+    <div>
+      <h2>Website SEO health</h2>
+      <p class="sub" id="auditSub" style="margin-bottom:0">Scanning index.html …</p>
+      <div class="sum" id="sum"></div>
+      <div class="row">
+        <button class="btn btn-dark btn-sm" id="rerun" type="button">Re-run audit</button>
+        <button class="btn btn-primary btn-sm" id="dlIndex" type="button">Download updated index.html</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="cols">
+    <!-- EDITOR -->
+    <div id="editor" style="display:grid;gap:22px"></div>
+
+    <!-- PREVIEWS -->
+    <div class="sticky">
+      <section class="card-a">
+        <h2>Google search preview</h2>
+        <p class="sub">How the website can look in Google results.</p>
+        <div class="toggle"><button type="button" class="on" data-dev="d">Desktop</button><button type="button" data-dev="m">Mobile</button></div>
+        <div class="serp" id="serp"></div>
+      </section>
+      <section class="card-a">
+        <h2>Share preview</h2>
+        <p class="sub">WhatsApp / Facebook / X link card.</p>
+        <div class="share" id="share"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- AUDIT -->
+  <section class="card-a">
+    <h2>Audit checklist</h2>
+    <p class="sub">Automatic checks on the published <code>index.html</code>, <code>robots.txt</code> and <code>sitemap.xml</code>.</p>
+    <ul class="audit" id="audit"></ul>
+  </section>
+
+  <!-- KEYWORDS -->
+  <section class="card-a">
+    <h2>Keyword usage</h2>
+    <p class="sub">Where each focus keyword appears on the page. Good SEO has the main keywords in the title, description and headings.</p>
+    <div style="overflow:auto"><table class="kw" id="kw"></table></div>
+  </section>
+
+  <!-- OUTPUT -->
+  <section class="card-a">
+    <h2>Generated SEO files</h2>
+    <p class="sub">These files are built from the settings above. Copy or download them, replace the files in your GitHub repository, and commit.</p>
+    <div class="tabs" id="tabs">
+      <button type="button" class="on" data-out="head">Head tags (index.html)</button>
+      <button type="button" data-out="sitemap">sitemap.xml</button>
+      <button type="button" data-out="robots">robots.txt</button>
+    </div>
+    <pre class="code" id="outCode"></pre>
+    <div class="row">
+      <button class="btn btn-dark btn-sm" id="copyBtn" type="button">Copy</button>
+      <button class="btn btn-ghost btn-sm" id="dlBtn" type="button">Download this file</button>
+    </div>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section class="card-a">
+    <h2>How to publish SEO changes</h2>
+    <ol class="steps-a">
+      <li>Fill in <b>Website address</b> above with your real GitHub Pages address.</li>
+      <li>Click <b>Download updated index.html</b>, then download <b>sitemap.xml</b> and <b>robots.txt</b> from the tabs.</li>
+      <li>In your GitHub repository, upload the three files and replace the old ones. Commit.</li>
+      <li>Open <b>Google Search Console</b>, add your website, and submit <code>sitemap.xml</code>.</li>
+      <li>Come back here and press <b>Re-run audit</b> to see the score improve.</li>
+    </ol>
+    <p class="note" style="margin-top:14px"><b>Note:</b> this site is static (GitHub Pages has no server), so the panel saves your draft in this browser and produces files to upload. A site with a real server or CMS could save changes directly.</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const PLACEHOLDER = /YOUR-USERNAME|YOUR-REPO/;
+  const KEY = 'careline_seo_draft';
+
+  const DEFAULTS = {
+    siteUrl: '',
+    title: 'Care Line كير لاين | Car Wash & Car Service in Oman',
+    description: 'Compare trusted car wash, oil change and car service companies in Oman that come to your home, office or campus. Book by call or WhatsApp.',
+    keywords: 'car wash, oil change, car service, car care, UTAS students, WhatsApp',
+    ogTitle: 'Care Line | Car wash & car service at your door in Oman',
+    ogDescription: 'Compare trusted car wash and car service companies in Oman. They come to you. Book on WhatsApp.',
+    ogImage: 'img/og-image.jpg',
+    ogImageAlt: 'Care Line logo: a service van with car wash, oil and repair icons',
+    siteName: 'Care Line',
+    altName: 'كير لاين',
+    bizDesc: 'Car wash, oil change and car service companies that come to your door across the Sultanate of Oman.',
+    logo: 'img/logo-256.png',
+    instagram: 'https://www.instagram.com/careline.om/',
+    tiktok: 'https://www.tiktok.com/@careline.om',
+    facebook: 'https://www.facebook.com/share/1ETecrbE7b/',
+    themeColor: '#1B2D5B',
+    index: true,
+    follow: true
+  };
+
+  const SECTIONS = [
+    { title: 'Search results (Google)', sub: 'What people see on Google and in the browser tab.', fields: [
+      { k: 'siteUrl', l: 'Website address (URL)', t: 'text', ph: 'https://yourname.github.io/careline/', hint: 'Your real GitHub Pages address. Used for the canonical link, sitemap, share image and structured data.' },
+      { k: 'title', l: 'Page title', t: 'text', min: 30, max: 60, hint: 'Put the brand and the main keyword. Aim for 30 to 60 characters.' },
+      { k: 'description', l: 'Meta description', t: 'area', min: 70, max: 160, hint: 'A short sentence that makes people click. Aim for 70 to 160 characters.' },
+      { k: 'keywords', l: 'Focus keywords (comma separated)', t: 'area', hint: 'Google ignores the keywords tag, so we only use these to check your page text. Arabic keywords are fine.' }
+    ]},
+    { title: 'Social sharing', sub: 'The card shown when the link is shared on WhatsApp, Facebook or X.', fields: [
+      { k: 'ogTitle', l: 'Share title', t: 'text', max: 70 },
+      { k: 'ogDescription', l: 'Share description', t: 'area', max: 200 },
+      { k: 'ogImage', l: 'Share image path', t: 'text', hint: 'Best size 1200 x 630 pixels. Default: img/og-image.jpg' },
+      { k: 'ogImageAlt', l: 'Share image description', t: 'text' }
+    ]},
+    { title: 'Business data (Schema.org)', sub: 'Structured data that tells Google who you are.', fields: [
+      { k: 'siteName', l: 'Business name', t: 'text' },
+      { k: 'altName', l: 'Arabic / alternative name', t: 'text' },
+      { k: 'bizDesc', l: 'Business description', t: 'area' },
+      { k: 'logo', l: 'Logo image path', t: 'text' },
+      { k: 'instagram', l: 'Instagram URL', t: 'text' },
+      { k: 'tiktok', l: 'TikTok URL', t: 'text' },
+      { k: 'facebook', l: 'Facebook URL', t: 'text' }
+    ]},
+    { title: 'Indexing & appearance', sub: 'Control what search engines may do.', fields: [
+      { k: 'index', l: 'Allow search engines to show this website in results', t: 'check' },
+      { k: 'follow', l: 'Allow search engines to follow links on the page', t: 'check' },
+      { k: 'themeColor', l: 'Browser theme colour (mobile address bar)', t: 'color' }
+    ]}
+  ];
+
+  /* ---------- state ---------- */
+  let cfg = Object.assign({}, DEFAULTS);
+  try { Object.assign(cfg, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {}
+  let outTab = 'head';
+  let device = 'd';
+  let auditData = null; // { doc, text }
+
+  const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const urlOk = () => /^https:\/\/[^\s]+$/i.test(cfg.siteUrl.trim()) && !PLACEHOLDER.test(cfg.siteUrl);
+  const base = () => (urlOk() ? cfg.siteUrl.trim().replace(/\/?$/, '/') : '');
+  const abs = (p) => (/^https?:\/\//i.test(p) ? p : (urlOk() ? base() + p.replace(/^\//, '') : p));
+  const today = () => new Date().toISOString().slice(0, 10);
+
+  /* ---------- generators ---------- */
+  function genHead() {
+    const robots = (cfg.index ? 'index' : 'noindex') + ', ' + (cfg.follow ? 'follow' : 'nofollow') + (cfg.index ? ', max-image-preview:large' : '');
+    const L = [];
+    L.push('<title>' + esc(cfg.title) + '</title>');
+    L.push('<meta name="description" content="' + esc(cfg.description) + '">');
+    if (cfg.keywords.trim()) L.push('<meta name="keywords" content="' + esc(cfg.keywords) + '">');
+    L.push('<meta name="robots" content="' + robots + '">');
+    L.push('<meta name="author" content="' + esc(cfg.siteName) + '">');
+    L.push('<meta name="theme-color" content="' + esc(cfg.themeColor) + '">');
+    if (urlOk()) L.push('<link rel="canonical" href="' + esc(base()) + '">');
+    else L.push('<!-- Set the Website address in the SEO panel to add the canonical link -->');
+    L.push('');
+    L.push('<!-- Social sharing preview (Facebook, WhatsApp, X, LinkedIn) -->');
+    L.push('<meta property="og:type" content="website">');
+    L.push('<meta property="og:site_name" content="' + esc(cfg.siteName) + '">');
+    L.push('<meta property="og:title" content="' + esc(cfg.ogTitle) + '">');
+    L.push('<meta property="og:description" content="' + esc(cfg.ogDescription) + '">');
+    if (urlOk()) L.push('<meta property="og:url" content="' + esc(base()) + '">');
+    L.push('<meta property="og:image" content="' + esc(abs(cfg.ogImage)) + '">');
+    L.push('<meta property="og:image:width" content="1200">');
+    L.push('<meta property="og:image:height" content="630">');
+    L.push('<meta property="og:image:alt" content="' + esc(cfg.ogImageAlt) + '">');
+    L.push('<meta property="og:locale" content="en_US">');
+    L.push('<meta property="og:locale:alternate" content="ar_OM">');
+    L.push('<meta name="twitter:card" content="summary_large_image">');
+    L.push('<meta name="twitter:title" content="' + esc(cfg.ogTitle) + '">');
+    L.push('<meta name="twitter:description" content="' + esc(cfg.ogDescription) + '">');
+    L.push('<meta name="twitter:image" content="' + esc(abs(cfg.ogImage)) + '">');
+    L.push('');
+    L.push('<!-- Structured data for search engines -->');
+    L.push('<script type="application/ld+json">');
+    L.push(genJsonLd());
+    L.push('<' + '/script>');
+    return L.join('\n  ');
+  }
+  function genJsonLd() {
+    const sameAs = [cfg.instagram, cfg.tiktok, cfg.facebook].map((s) => s.trim()).filter(Boolean);
+    const org = {
+      '@type': 'Organization', name: cfg.siteName,
+      alternateName: [cfg.altName].filter(Boolean),
+      url: abs(''), logo: abs(cfg.logo), description: cfg.bizDesc,
+      areaServed: { '@type': 'Country', name: 'Oman' }, sameAs: sameAs
+    };
+    const site = { '@type': 'WebSite', name: cfg.siteName, url: abs(''), inLanguage: ['en', 'ar'] };
+    if (!urlOk()) { org.url = 'https://YOUR-USERNAME.github.io/YOUR-REPO/'; site.url = org.url; org.logo = org.url + cfg.logo.replace(/^\//, ''); }
+    return JSON.stringify({ '@context': 'https://schema.org', '@graph': [org, site] }, null, 2);
+  }
+  function genSitemap() {
+    const loc = urlOk() ? base() : 'https://YOUR-USERNAME.github.io/YOUR-REPO/';
+    return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>' + esc(loc) + '</loc>\n    <lastmod>' + today() + '</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>\n</urlset>\n';
+  }
+  function genRobots() {
+    const loc = urlOk() ? base() : 'https://YOUR-USERNAME.github.io/YOUR-REPO/';
+    return 'User-agent: *\n' + (cfg.index ? 'Allow: /' : 'Disallow: /') + '\n\nSitemap: ' + loc + 'sitemap.xml\n';
+  }
+  const OUT = {
+    head: { name: 'seo-head-tags.html', get: genHead, type: 'text/html' },
+    sitemap: { name: 'sitemap.xml', get: genSitemap, type: 'application/xml' },
+    robots: { name: 'robots.txt', get: genRobots, type: 'text/plain' }
+  };
+
+  /* ---------- editor ---------- */
+  function buildEditor() {
+    $('#editor').innerHTML = SECTIONS.map((sec) =>
+      '<section class="card-a"><h2>' + sec.title + '</h2><p class="sub">' + sec.sub + '</p>' +
+      sec.fields.map((f) => {
+        const id = 'f_' + f.k;
+        if (f.t === 'check') return '<label class="chk"><input type="checkbox" id="' + id + '" data-k="' + f.k + '"><span>' + f.l + '</span></label>';
+        const counter = (f.min || f.max) ? '<span class="cnt" id="c_' + f.k + '"></span>' : '';
+        let input;
+        if (f.t === 'area') input = '<textarea id="' + id + '" data-k="' + f.k + '"></textarea>';
+        else if (f.t === 'color') input = '<input type="color" id="' + id + '" data-k="' + f.k + '">';
+        else input = '<input type="text" id="' + id + '" data-k="' + f.k + '"' + (f.ph ? ' placeholder="' + f.ph + '"' : '') + ' autocomplete="off">';
+        return '<div class="fld"><label for="' + id + '"><span>' + f.l + '</span>' + counter + '</label>' + input + (f.hint ? '<span class="hint">' + f.hint + '</span>' : '') + '</div>';
+      }).join('') +
+      '</section>').join('') +
+      '<button class="btn btn-ghost btn-sm" id="resetDraft" type="button" style="justify-self:start">Reset to defaults</button>';
+    $$('#editor [data-k]').forEach((el) => {
+      const k = el.dataset.k;
+      if (el.type === 'checkbox') el.checked = !!cfg[k]; else el.value = cfg[k];
+      el.addEventListener('input', () => {
+        cfg[k] = el.type === 'checkbox' ? el.checked : el.value;
+        try { localStorage.setItem(KEY, JSON.stringify(cfg)); $('#saved').textContent = 'Draft saved in this browser'; } catch (e) { $('#saved').textContent = 'Could not save draft'; }
+        refresh();
+      });
+    });
+    $('#resetDraft').addEventListener('click', () => {
+      cfg = Object.assign({}, DEFAULTS);
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      buildEditor(); refresh();
+    });
+  }
+  function updateCounters() {
+    SECTIONS.forEach((sec) => sec.fields.forEach((f) => {
+      const c = $('#c_' + f.k); if (!c) return;
+      const n = (cfg[f.k] || '').length;
+      const okMin = !f.min || n >= f.min, okMax = !f.max || n <= f.max;
+      c.textContent = n + (f.max ? ' / ' + f.max : '');
+      c.className = 'cnt ' + (n === 0 ? 'bad' : (okMin && okMax ? 'ok' : 'bad'));
+    }));
+  }
+
+  /* ---------- previews ---------- */
+  function trunc(s, n) { return s.length > n ? s.slice(0, n - 1).trim() + '…' : s; }
+  function renderPreviews() {
+    let host = 'yourname.github.io', path = 'careline';
+    if (urlOk()) { try { const u = new URL(base()); host = u.host; path = u.pathname.replace(/^\/|\/$/g, '').replace(/\//g, ' › '); } catch (e) {} }
+    const crumb = path ? host + ' › ' + path : host;
+    const serp = $('#serp');
+    serp.className = 'serp' + (device === 'm' ? ' m' : '');
+    serp.innerHTML =
+      '<div class="u"><img src="favicon.png" alt=""><div>' + esc(cfg.siteName) + '<small>' + esc(crumb) + '</small></div></div>' +
+      '<div class="t">' + esc(trunc(cfg.title, device === 'm' ? 54 : 60)) + '</div>' +
+      '<div class="d">' + esc(trunc(cfg.description, device === 'm' ? 120 : 160)) + '</div>';
+    $('#share').innerHTML =
+      '<img src="' + esc(cfg.ogImage) + '" alt="' + esc(cfg.ogImageAlt) + '">' +
+      '<div><small>' + esc(host) + '</small><b>' + esc(cfg.ogTitle) + '</b><span>' + esc(trunc(cfg.ogDescription, 110)) + '</span></div>';
+  }
+
+  /* ---------- output ---------- */
+  function renderOut() {
+    $('#outCode').textContent = OUT[outTab].get();
+    $$('#tabs button').forEach((b) => b.classList.toggle('on', b.dataset.out === outTab));
+  }
+  function download(name, text, type) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type: type + ';charset=utf-8' }));
+    a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  async function copy(text, btn) {
+    try { await navigator.clipboard.writeText(text); }
+    catch (e) { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (_) {} t.remove(); }
+    const old = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(() => (btn.textContent = old), 1400);
+  }
+  async function downloadIndex() {
+    try {
+      const r = await fetch('index.html', { cache: 'no-store' });
+      if (!r.ok) throw new Error('fetch');
+      const html = await r.text();
+      const re = /<!-- SEO:START[\s\S]*?-->[\s\S]*?<!-- SEO:END -->/;
+      if (!re.test(html)) { alert('SEO markers were not found in index.html.'); return; }
+      const block = '<!-- SEO:START (managed by seo-admin.html: edit the SEO settings there and download the updated file) -->\n  ' + genHead() + '\n  <!-- SEO:END -->';
+      download('index.html', html.replace(re, () => block), 'text/html');
+    } catch (e) {
+      alert('Could not read index.html. Open this panel from a web address (your GitHub Pages site or a local server), not directly from the file.');
+    }
+  }
+
+  /* ---------- audit ---------- */
+  async function head(url) { try { const r = await fetch(url, { cache: 'no-store' }); return r.ok ? await r.text() : null; } catch (e) { return null; } }
+  async function runAudit() {
+    $('#auditSub').textContent = 'Scanning index.html …';
+    const text = await head('index.html');
+    if (!text) {
+      auditData = null;
+      $('#auditSub').textContent = 'Could not read index.html. Open this panel from your published site or a local web server to run the audit.';
+      $('#audit').innerHTML = '<li class="warn"><span class="ic">!</span><div><b>Audit unavailable</b><span>Browsers block reading files when a page is opened directly from the disk. Publish the site (or run a local server) and reload this page.</span></div></li>';
+      $('#score').innerHTML = '–<small>/ 100</small>'; $('#sum').innerHTML = '';
+      renderKeywords(); return;
+    }
+    const doc = new DOMParser().parseFromString(text, 'text/html');
+    auditData = { doc, text };
+    const res = [];
+    const add = (s, n, d) => res.push({ s, n, d });
+    const meta = (sel, attr = 'content') => { const el = doc.querySelector(sel); return el ? (el.getAttribute(attr) || '').trim() : ''; };
+
+    const title = (doc.title || '').trim();
+    add(!title ? 'fail' : (title.length >= 30 && title.length <= 60 ? 'pass' : 'warn'), 'Page title', title ? title.length + ' characters. Best: 30 to 60.' : 'Missing <title>.');
+    const desc = meta('meta[name="description"]');
+    add(!desc ? 'fail' : (desc.length >= 70 && desc.length <= 160 ? 'pass' : 'warn'), 'Meta description', desc ? desc.length + ' characters. Best: 70 to 160.' : 'Missing meta description.');
+    const h1 = doc.querySelectorAll('h1').length;
+    add(h1 === 1 ? 'pass' : 'fail', 'One main heading (H1)', h1 + ' found. A page should have exactly one H1.');
+    const h2 = doc.querySelectorAll('h2').length;
+    add(h2 >= 3 ? 'pass' : 'warn', 'Section headings (H2)', h2 + ' found. Headings help search engines understand the page.');
+    const imgs = Array.from(doc.querySelectorAll('img'));
+    const noAlt = imgs.filter((i) => !(i.getAttribute('alt') || '').trim());
+    add(noAlt.length === 0 ? 'pass' : 'warn', 'Image descriptions (alt text)', imgs.length + ' images, ' + noAlt.length + ' without alt text.');
+    const sized = imgs.filter((i) => i.getAttribute('width') && i.getAttribute('height')).length;
+    add(sized === imgs.length ? 'pass' : 'warn', 'Image sizes set (stable layout)', sized + ' of ' + imgs.length + ' images have width and height.');
+    add(doc.documentElement.getAttribute('lang') ? 'pass' : 'fail', 'Page language declared', 'html lang="' + (doc.documentElement.getAttribute('lang') || '') + '"');
+    add(doc.querySelector('meta[name="viewport"]') ? 'pass' : 'fail', 'Mobile friendly viewport', 'Viewport meta tag ' + (doc.querySelector('meta[name="viewport"]') ? 'found.' : 'missing.'));
+    const robots = meta('meta[name="robots"]');
+    add(/noindex/i.test(robots) ? 'fail' : 'pass', 'Search engines allowed to index', robots ? 'robots: ' + robots : 'No robots tag (indexing allowed by default).');
+    const canon = meta('link[rel="canonical"]', 'href');
+    add(!canon ? 'warn' : (PLACEHOLDER.test(canon) ? 'fail' : 'pass'), 'Canonical link', canon ? canon : 'Missing. Set the Website address in this panel and upload the updated index.html.');
+    const og = ['og:title', 'og:description', 'og:image'].filter((p) => meta('meta[property="' + p + '"]'));
+    add(og.length === 3 ? 'pass' : 'fail', 'Open Graph share tags', og.length + ' of 3 required tags present.');
+    const ogi = meta('meta[property="og:image"]');
+    add(!ogi ? 'fail' : (PLACEHOLDER.test(ogi) ? 'fail' : 'pass'), 'Share image address', PLACEHOLDER.test(ogi) ? 'Still contains the placeholder address (YOUR-USERNAME). Replace it with your real URL.' : ogi);
+    add(meta('meta[name="twitter:card"]') ? 'pass' : 'warn', 'X (Twitter) card', meta('meta[name="twitter:card"]') || 'Missing.');
+    let ld = null, ldOk = false;
+    try { const s = doc.querySelector('script[type="application/ld+json"]'); ld = JSON.parse(s.textContent); ldOk = true; } catch (e) {}
+    const hasOrg = ldOk && JSON.stringify(ld).includes('"Organization"');
+    add(ldOk && hasOrg ? 'pass' : 'fail', 'Structured data (JSON-LD)', ldOk ? (hasOrg ? 'Valid Organization data found.' : 'Valid JSON but no Organization.') : 'Missing or invalid JSON.');
+    const left = (text.match(/YOUR-USERNAME|YOUR-REPO/g) || []).length;
+    add(left === 0 ? 'pass' : 'fail', 'Placeholder address replaced', left === 0 ? 'No placeholders left in index.html.' : left + ' placeholder(s) still in index.html. Use "Download updated index.html".');
+    add(doc.querySelector('link[rel="icon"]') ? 'pass' : 'warn', 'Favicon', doc.querySelector('link[rel="icon"]') ? 'Found.' : 'Missing.');
+    const words = (doc.body.textContent || '').replace(/\s+/g, ' ').trim().split(' ').filter((w) => w.length > 1).length;
+    add(words >= 300 ? 'pass' : 'warn', 'Readable text on the page', words + ' words in the page source. Aim for 300+.');
+    const ext = Array.from(doc.querySelectorAll('a[target="_blank"]')).filter((a) => !/noopener/i.test(a.getAttribute('rel') || ''));
+    add(ext.length === 0 ? 'pass' : 'warn', 'Safe external links', ext.length + ' external link(s) missing rel="noopener".');
+    const soc = ['instagram.com', 'tiktok.com', 'facebook.com'].filter((d) => doc.querySelector('a[href*="' + d + '"]')).length;
+    add(soc === 3 ? 'pass' : 'warn', 'Social profile links', soc + ' of 3 social links on the page.');
+
+    const [rb, sm] = await Promise.all([head('robots.txt'), head('sitemap.xml')]);
+    add(rb ? (PLACEHOLDER.test(rb) ? 'warn' : 'pass') : 'fail', 'robots.txt', rb ? (PLACEHOLDER.test(rb) ? 'Found, but the sitemap line still has the placeholder address.' : 'Found.') : 'Not found.');
+    add(sm ? (PLACEHOLDER.test(sm) ? 'warn' : 'pass') : 'fail', 'sitemap.xml', sm ? (PLACEHOLDER.test(sm) ? 'Found, but it still has the placeholder address.' : 'Found.') : 'Not found.');
+
+    const pass = res.filter((r) => r.s === 'pass').length, warn = res.filter((r) => r.s === 'warn').length, fail = res.filter((r) => r.s === 'fail').length;
+    const pct = Math.round(((pass + warn * 0.5) / res.length) * 100);
+    const C = 326.7;
+    const fg = $('#ringFg');
+    fg.style.strokeDashoffset = C - (C * pct) / 100;
+    fg.style.stroke = pct >= 85 ? 'var(--green)' : (pct >= 60 ? '#E8A317' : 'var(--brand)');
+    $('#score').innerHTML = pct + '<small>/ 100</small>';
+    $('#sum').innerHTML = '<span class="p">' + pass + ' passed</span><span class="w">' + warn + ' to improve</span><span class="f">' + fail + ' failed</span>';
+    $('#auditSub').textContent = res.length + ' checks on the published website files.';
+    const order = { fail: 0, warn: 1, pass: 2 };
+    $('#audit').innerHTML = res.slice().sort((a, b) => order[a.s] - order[b.s]).map((r) =>
+      '<li class="' + r.s + '"><span class="ic">' + (r.s === 'pass' ? '✓' : (r.s === 'warn' ? '!' : '✕')) + '</span><div><b>' + esc(r.n) + '</b><span>' + esc(r.d) + '</span></div></li>').join('');
+    renderKeywords();
+  }
+
+  function renderKeywords() {
+    const kws = cfg.keywords.split(',').map((s) => s.trim()).filter(Boolean);
+    const t = $('#kw');
+    if (!kws.length) { t.innerHTML = '<tr><td>Add focus keywords above.</td></tr>'; return; }
+    const lc = (s) => (s || '').toLowerCase();
+    const doc = auditData && auditData.doc;
+    const body = doc ? lc(doc.body.textContent.replace(/\s+/g, ' ')) : '';
+    const h = doc ? lc(Array.from(doc.querySelectorAll('h1,h2,h3')).map((e) => e.textContent).join(' ')) : '';
+    const mark = (b) => (b ? '<span class="yes">✓</span>' : '<span class="no">–</span>');
+    const count = (hay, k) => (k ? hay.split(k).length - 1 : 0);
+    t.innerHTML = '<tr><th>Keyword</th><th>In title</th><th>In description</th><th>In headings</th><th>On page</th></tr>' +
+      kws.map((k) => {
+        const kk = lc(k);
+        return '<tr><td>' + esc(k) + '</td><td>' + mark(lc(cfg.title).includes(kk)) + '</td><td>' + mark(lc(cfg.description).includes(kk)) + '</td><td>' + (doc ? mark(h.includes(kk)) : '–') + '</td><td>' + (doc ? count(body, kk) + '×' : '–') + '</td></tr>';
+      }).join('');
+  }
+
+  /* ---------- wiring ---------- */
+  function refresh() { updateCounters(); renderPreviews(); renderOut(); renderKeywords(); }
+
+  $('#tabs').addEventListener('click', (e) => { const b = e.target.closest('[data-out]'); if (b) { outTab = b.dataset.out; renderOut(); } });
+  $('#copyBtn').addEventListener('click', (e) => copy(OUT[outTab].get(), e.target));
+  $('#dlBtn').addEventListener('click', () => download(OUT[outTab].name, OUT[outTab].get(), OUT[outTab].type));
+  $('#dlIndex').addEventListener('click', downloadIndex);
+  $('#rerun').addEventListener('click', runAudit);
+  $$('.toggle button').forEach((b) => b.addEventListener('click', () => {
+    device = b.dataset.dev; $$('.toggle button').forEach((x) => x.classList.toggle('on', x === b)); renderPreviews();
+  }));
+
+  buildEditor();
+  refresh();
+  runAudit();
+})();
+</script>
+</body>
+</html>
