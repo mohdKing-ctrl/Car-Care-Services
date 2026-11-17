@@ -65,9 +65,11 @@
   function applyI18n() {
     document.documentElement.lang = lang;
     document.documentElement.dir = isAr() ? 'rtl' : 'ltr';
-    $$('[data-i18n]').forEach((el) => (el.textContent = t(el.dataset.i18n)));
-    $$('[data-i18n-html]').forEach((el) => (el.innerHTML = t(el.dataset.i18nHtml)));
-    $$('[data-i18n-placeholder]').forEach((el) => (el.placeholder = t(el.dataset.i18nPlaceholder)));
+    // if a translation is missing, keep the text already written in the page instead of showing its code name
+    const has = (k) => !!((I18N[lang] && I18N[lang][k]) || I18N.en[k]);
+    $$('[data-i18n]').forEach((el) => { if (has(el.dataset.i18n)) el.textContent = t(el.dataset.i18n); });
+    $$('[data-i18n-html]').forEach((el) => { if (has(el.dataset.i18nHtml)) el.innerHTML = t(el.dataset.i18nHtml); });
+    $$('[data-i18n-placeholder]').forEach((el) => { if (has(el.dataset.i18nPlaceholder)) el.placeholder = t(el.dataset.i18nPlaceholder); });
     $$('[data-i18n-alt]').forEach((el) => (el.alt = t(el.dataset.i18nAlt)));
     $('#joinBtn').href = waLink(TEAM_WHATSAPP, t('msg.join'));
     // signed in already? the header button leads straight to the dashboard
