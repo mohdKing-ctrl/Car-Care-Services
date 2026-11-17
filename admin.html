@@ -32,10 +32,11 @@
 <nav class="tabs-d" aria-label="Dashboard sections">
   <div class="wrap" id="tabs">
     <button type="button" data-tab="overview" class="on">Overview</button>
+    <button type="button" data-tab="seo">Meta description &amp; SEO</button>
     <button type="button" data-tab="companies">Companies</button>
+    <button type="button" data-tab="add">+ Add company</button>
     <button type="button" data-tab="orders">Customers &amp; orders</button>
-    <button type="button" data-tab="seo">SEO text</button>
-    <button type="button" data-tab="accounts">Accounts</button>
+    <button type="button" data-tab="accounts">Usernames &amp; passwords</button>
   </div>
 </nav>
 
@@ -43,6 +44,22 @@
 
   <!-- OVERVIEW -->
   <section class="tabpanel" id="tab-overview">
+    <div class="panel meta-box">
+      <div class="meta-head">
+        <div>
+          <h2>Website meta description</h2>
+          <p class="sub">The text Google shows under the website name in search results. Type it here and press Save.</p>
+        </div>
+        <span class="cnt" id="qCnt"></span>
+      </div>
+      <textarea id="qDesc" class="meta-area" maxlength="320" aria-label="Meta description" placeholder="Type the meta description of the website here…"></textarea>
+      <div class="row-d" style="margin-top:12px">
+        <button class="btn btn-primary" id="qSave" type="button">Save meta description</button>
+        <a class="btn btn-ghost btn-sm" href="#seo" data-goto="seo">Title, keywords &amp; preview →</a>
+        <span class="okmsg" id="qMsg" hidden></span>
+      </div>
+    </div>
+
     <div class="panel">
       <div class="filters-d">
         <label class="note-s" for="period"><b>Period</b></label>
@@ -59,46 +76,17 @@
     </div>
   </section>
 
-  <!-- COMPANIES -->
-  <section class="tabpanel" id="tab-companies" hidden>
-    <div class="panel">
-      <h2>All companies</h2>
-      <p class="sub">Every partner company with its activity for the selected period. Click a row for the full details.</p>
-      <div class="filters-d" style="margin-bottom:14px">
-        <input type="search" id="coSearch" placeholder="Search company or governorate…" autocomplete="off">
-        <select id="coPeriod"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
-        <button class="btn btn-ghost btn-sm" id="coCsv" type="button">Export CSV</button>
-      </div>
-      <div id="coTable"></div>
-    </div>
-  </section>
-
-  <!-- ORDERS -->
-  <section class="tabpanel" id="tab-orders" hidden>
-    <div class="panel">
-      <h2>Customers &amp; orders</h2>
-      <p class="sub">Customers who sent an order through the UTAS students &amp; staff form. Orders made on this browser appear as live rows; the rest is sample data.</p>
-      <div class="filters-d" style="margin-bottom:14px">
-        <input type="search" id="orSearch" placeholder="Search customer or phone…" autocomplete="off">
-        <select id="orCompany"></select>
-        <select id="orPeriod"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
-        <button class="btn btn-ghost btn-sm" id="orCsv" type="button">Export CSV</button>
-      </div>
-      <div id="orTable"></div>
-    </div>
-  </section>
-
   <!-- SEO -->
   <section class="tabpanel" id="tab-seo" hidden>
     <div class="seo-grid">
       <div class="panel">
-        <h2>SEO text editor</h2>
-        <p class="sub">Write the words that search engines and social media show for the website. Type here, press <b>Save &amp; apply</b>, then open the website to see it.</p>
+        <h2>Meta description &amp; SEO</h2>
+        <p class="sub">Write the words that Google and social media show for the website, then press <b>Save &amp; apply</b>.</p>
 
-        <div class="fld-d"><label for="sTitle"><span>Page title <small class="hint">(shown as the blue link on Google and in the browser tab)</small></span><span class="cnt" id="cTitle"></span></label>
+        <div class="fld-d"><label for="sDesc"><span>Meta description <small class="hint">(the grey text under the link on Google)</small></span><span class="cnt" id="cDesc"></span></label>
+          <textarea id="sDesc" class="meta-area" maxlength="320"></textarea></div>
+        <div class="fld-d"><label for="sTitle"><span>Page title <small class="hint">(the blue link on Google and the browser tab)</small></span><span class="cnt" id="cTitle"></span></label>
           <input type="text" id="sTitle" maxlength="120" autocomplete="off"></div>
-        <div class="fld-d"><label for="sDesc"><span>Meta description <small class="hint">(the grey text under the link)</small></span><span class="cnt" id="cDesc"></span></label>
-          <textarea id="sDesc" maxlength="320"></textarea></div>
         <div class="fld-d"><label for="sKeys"><span>Keywords <small class="hint">(comma separated)</small></span></label>
           <textarea id="sKeys" style="min-height:70px"></textarea></div>
         <div class="fld-d"><label for="sOgTitle"><span>Share title <small class="hint">(WhatsApp / Facebook card)</small></span><span class="cnt" id="cOgT"></span></label>
@@ -113,14 +101,14 @@
           <a class="btn btn-ghost btn-sm" href="index.html" target="_blank" rel="noopener">Open website</a>
         </div>
         <p class="okmsg" id="seoMsg" hidden style="margin-top:14px"></p>
-        <p class="warnmsg" style="margin-top:14px"><b>Important:</b> <b>Save &amp; apply</b> shows the new text on this browser right away, which is perfect for a demonstration. To change what Google and other visitors see, press <b>Download updated index.html</b> and upload that file to GitHub. (A static website cannot change itself on the server.)</p>
-        <p class="note-s" style="margin-top:12px">More tools (audit score, sitemap, robots.txt): <a href="seo-admin.html" style="color:var(--utas);font-weight:700">Advanced SEO tools →</a></p>
+        <p class="note-s" style="margin-top:14px"><b>Save &amp; apply</b> updates the website on this device straight away. To publish the new text on GitHub for Google, press <b>Download updated index.html</b> and upload that file to the repository.</p>
+        <p class="note-s" style="margin-top:8px">More tools (SEO score, sitemap, robots.txt): <a href="seo-admin.html" style="color:var(--utas);font-weight:700">Advanced SEO tools →</a></p>
       </div>
 
       <div style="display:grid;gap:20px">
         <div class="panel">
           <h2>Google preview</h2>
-          <p class="sub">How your text can look in search results.</p>
+          <p class="sub">How the website can look in search results.</p>
           <div class="serp" id="serp"></div>
         </div>
         <div class="panel">
@@ -132,28 +120,109 @@
     </div>
   </section>
 
+  <!-- COMPANIES -->
+  <section class="tabpanel" id="tab-companies" hidden>
+    <div class="panel">
+      <div class="meta-head">
+        <div>
+          <h2>All companies</h2>
+          <p class="sub">Every company on the website and how it is doing. Click a row for the full details.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-goto="add">+ Add company</button>
+      </div>
+      <div class="filters-d" style="margin:14px 0">
+        <input type="search" id="coSearch" placeholder="Search company or governorate…" autocomplete="off">
+        <select id="coPeriod"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
+        <button class="btn btn-ghost btn-sm" id="coCsv" type="button">Export CSV</button>
+      </div>
+      <div id="coTable"></div>
+    </div>
+  </section>
+
+  <!-- ADD COMPANY -->
+  <section class="tabpanel" id="tab-add" hidden>
+    <div class="panel">
+      <h2>Add a new company</h2>
+      <p class="sub">For a business that subscribes to Care Line. It appears on the website straight away and gets its own username, password and dashboard.</p>
+
+      <form id="addForm" novalidate>
+        <div class="add-grid">
+          <div class="fld-d"><label for="aName">Company name (English) *</label><input type="text" id="aName" maxlength="60" autocomplete="off" placeholder="e.g. Muscat Shine Car Care"></div>
+          <div class="fld-d"><label for="aNameAr">Company name (Arabic)</label><input type="text" id="aNameAr" maxlength="60" autocomplete="off" dir="rtl" placeholder="مثال: لمعة مسقط"></div>
+          <div class="fld-d"><label for="aPhone">WhatsApp / phone number *</label><input type="tel" id="aPhone" inputmode="numeric" maxlength="12" autocomplete="off" placeholder="9X XXX XXX"><span class="hint">Omani number, 8 digits. Used for the Call and WhatsApp buttons.</span></div>
+          <div class="fld-d"><label for="aYears">Years in business</label><input type="text" id="aYears" inputmode="numeric" maxlength="2" autocomplete="off" placeholder="e.g. 3"></div>
+        </div>
+
+        <fieldset class="fld-d"><legend class="lg">Governorates served *</legend><div class="chk-grid" id="aGovs"></div></fieldset>
+        <div class="fld-d"><label for="aAreas">Areas served</label><input type="text" id="aAreas" autocomplete="off" placeholder="e.g. Al Khuwair, Qurum, Bawshar"><span class="hint">Separate with commas.</span></div>
+
+        <fieldset class="fld-d"><legend class="lg">Services and starting prices (OMR) *</legend><div class="svc-grid" id="aSvcs"></div></fieldset>
+
+        <div class="add-grid">
+          <div class="fld-d"><label for="aFrom">Opens at</label><select id="aFrom"></select></div>
+          <div class="fld-d"><label for="aTo">Closes at</label><select id="aTo"></select></div>
+          <div class="fld-d" style="grid-column:1/-1"><label for="aDesc">Description (English)</label><textarea id="aDesc" maxlength="240" style="min-height:70px" placeholder="One or two sentences about the company"></textarea></div>
+          <div class="fld-d" style="grid-column:1/-1"><label for="aDescAr">Description (Arabic)</label><textarea id="aDescAr" maxlength="240" dir="rtl" style="min-height:70px"></textarea></div>
+        </div>
+
+        <div class="login-box">
+          <h3>Login for this company</h3>
+          <div class="add-grid">
+            <div class="fld-d"><label for="aUser">Username *</label><input type="text" id="aUser" maxlength="30" autocomplete="off" autocapitalize="none" spellcheck="false"><span class="hint">Small letters, numbers and dashes.</span></div>
+            <div class="fld-d"><label for="aPass">Password *</label>
+              <div class="pw"><input type="text" id="aPass" maxlength="40" autocomplete="off" spellcheck="false"><button type="button" id="aGen">New</button></div>
+              <span class="hint">At least 8 characters.</span></div>
+          </div>
+        </div>
+
+        <p class="login-err" id="aErr" role="alert" hidden></p>
+        <button class="btn btn-primary btn-lg" type="submit" style="width:auto">Add company</button>
+      </form>
+      <div id="addDone" hidden></div>
+    </div>
+  </section>
+
+  <!-- ORDERS -->
+  <section class="tabpanel" id="tab-orders" hidden>
+    <div class="panel">
+      <h2>Customers &amp; orders</h2>
+      <p class="sub">Students and staff who sent an order through the UTAS form, with the company they chose.</p>
+      <div class="filters-d" style="margin-bottom:14px">
+        <input type="search" id="orSearch" placeholder="Search customer or phone…" autocomplete="off">
+        <select id="orCompany"></select>
+        <select id="orPeriod"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
+        <button class="btn btn-ghost btn-sm" id="orCsv" type="button">Export CSV</button>
+      </div>
+      <div id="orTable"></div>
+    </div>
+  </section>
+
   <!-- ACCOUNTS -->
   <section class="tabpanel" id="tab-accounts" hidden>
     <div class="panel">
-      <h2>Accounts</h2>
-      <p class="sub">The administrator and one login for each company. Passwords are never shown here (only stored as hashes).</p>
-      <div id="acTable"></div>
+      <div class="meta-head">
+        <div>
+          <h2>Usernames &amp; passwords</h2>
+          <p class="sub">The administrator and every company login.</p>
+        </div>
+        <label class="check"><input type="checkbox" id="showPw"><span>Show passwords</span></label>
+      </div>
+      <div id="acTable" style="margin-top:14px"></div>
     </div>
     <div class="panel">
       <h2>Change a password</h2>
-      <p class="sub">Pick an account and type a new password. The tool prints a line to paste into <code>js/accounts.js</code>, replacing that account's old line.</p>
-      <div class="filters-d" style="margin-bottom:12px">
+      <p class="sub">The new password works immediately, and the quick-login list on the login page is updated too.</p>
+      <div class="filters-d">
         <select id="pwUser"></select>
-        <div class="pw" style="min-width:240px"><input type="password" id="pwNew" placeholder="New password (8+ characters)" autocomplete="new-password" style="width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font:inherit"></div>
-        <button class="btn btn-dark btn-sm" id="pwGo" type="button">Create line</button>
+        <input type="text" id="pwNew" placeholder="New password (8+ characters)" autocomplete="off" spellcheck="false" style="min-width:240px;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font:inherit">
+        <button class="btn btn-dark btn-sm" id="pwGo" type="button">Change password</button>
       </div>
-      <pre class="code" id="pwOut" hidden></pre>
-      <button class="btn btn-ghost btn-sm" id="pwCopy" type="button" hidden style="margin-top:10px">Copy</button>
+      <p class="okmsg" id="pwMsg" hidden style="margin-top:12px"></p>
     </div>
     <div class="panel">
-      <h2>Clear live data</h2>
-      <p class="sub">Deletes the visits, clicks and orders recorded on this browser (sample history stays).</p>
-      <button class="btn btn-ghost btn-sm" id="clearLive" type="button">Clear live data on this browser</button>
+      <h2>Reset activity</h2>
+      <p class="sub">Deletes the visits, clicks and orders recorded on this device (sample history stays).</p>
+      <button class="btn btn-ghost btn-sm" id="clearLive" type="button">Clear recorded activity</button>
     </div>
   </section>
 </main>
@@ -166,6 +235,7 @@
 </div>
 
 <script src="js/data.js"></script>
+<script src="js/store.js"></script>
 <script src="js/track.js"></script>
 <script src="js/dash.js"></script>
 <script src="js/admin.js"></script>

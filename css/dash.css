@@ -74,7 +74,7 @@ table.dt .who .avatar{width:34px;height:34px;border-radius:10px;font-size:.75rem
 
 .fld-d{display:grid;gap:6px;margin-bottom:14px}
 .fld-d label{font-weight:700;font-size:.86rem;display:flex;justify-content:space-between;gap:8px}
-.fld-d input[type=text],.fld-d input[type=password],.fld-d textarea,.fld-d select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:.94rem;background:#fff}
+.fld-d input[type=text],.fld-d input[type=tel],.fld-d input[type=password],.fld-d textarea,.fld-d select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:.94rem;background:#fff}
 .fld-d textarea{min-height:92px;resize:vertical;line-height:1.5}
 .fld-d .hint{color:var(--muted);font-size:.8rem}
 .cnt{font-weight:700;font-size:.78rem;color:var(--muted)}
@@ -117,3 +117,53 @@ pre.code{background:#0E1A2B;color:#D6E2F5;border-radius:12px;padding:14px;overfl
 
 @media (max-width:900px){.g2,.seo-grid{grid-template-columns:1fr}.dgrid{grid-template-columns:1fr}}
 @media (max-width:560px){.bars li{grid-template-columns:1fr}.tile b{font-size:1.6rem}}
+
+/* ---------- meta description box ---------- */
+.meta-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.meta-box{border:2px solid var(--utas);background:#fff}
+.meta-area{width:100%;min-height:130px;padding:14px 16px;border:2px solid #C9D6F2;border-radius:14px;font:inherit;font-size:1rem;line-height:1.55;resize:vertical;background:#FBFCFF;margin-top:12px}
+.meta-area:focus{outline:none;border-color:var(--utas);box-shadow:0 0 0 4px rgba(31,63,143,.12)}
+.fld-d .meta-area{margin-top:0}
+
+/* ---------- add company form ---------- */
+.add-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.lg{font-weight:700;font-size:.86rem;padding:0;margin-bottom:6px}
+fieldset.fld-d{border:0;padding:0;margin:0 0 14px;min-width:0}
+.chk-grid{display:flex;flex-wrap:wrap;gap:8px}
+.chk-chip{position:relative;cursor:pointer}
+.chk-chip input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.chk-chip span{display:inline-flex;gap:6px;align-items:center;padding:8px 12px;border:1.5px solid var(--line);border-radius:99px;font-weight:600;font-size:.86rem;background:#fff;transition:.15s}
+.chk-chip:hover span{border-color:var(--utas)}
+.chk-chip input:checked+span{background:#EAF0FD;border-color:var(--utas);color:var(--utas)}
+.chk-chip input:focus-visible+span{outline:3px solid #F2B33D;outline-offset:2px}
+.svc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px}
+.svc-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 6px 6px 0}
+.svc-price{width:110px;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:.9rem;text-align:end}
+.svc-price:disabled{background:#F4F5F8;color:#b3b8c4}
+.login-box{background:#F7F9FE;border:1px solid #D5DFF3;border-radius:16px;padding:16px 18px 4px;margin:6px 0 16px}
+.login-box h3{font-size:1rem;margin-bottom:10px}
+
+/* ---------- quick login (login page) ---------- */
+.quick{margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+.quick h2{font-size:1rem;letter-spacing:-.01em}
+.quick p{color:var(--muted);font-size:.85rem;margin:2px 0 12px}
+.q-label{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:14px 0 8px}
+.q-list{display:grid;gap:6px;max-height:280px;overflow:auto;padding-inline-end:4px}
+.q-btn{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;text-align:start;font:inherit;transition:.15s}
+.q-btn:hover{border-color:var(--utas);background:#F7F9FE}
+.q-btn.on{border-color:var(--utas);background:#EAF0FD;box-shadow:0 0 0 3px rgba(31,63,143,.12)}
+.q-btn:focus-visible{outline:3px solid #F2B33D;outline-offset:2px}
+.q-av{width:32px;height:32px;border-radius:9px;background:#EEF1F7;color:var(--utas);display:grid;place-items:center;font-weight:800;font-size:.75rem;flex:none}
+.q-main{border-color:#C9D6F2}
+.q-main .q-av{background:var(--utas);color:#fff;font-size:.9rem}
+.q-t{display:grid;line-height:1.25;flex:1;min-width:0}
+.q-t b{font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.q-t small{color:var(--muted);font-size:.76rem}
+.q-go{font-size:.78rem;font-weight:700;color:var(--utas)}
+.login-card{width:min(460px,100%)}
+
+@media (max-width:700px){.add-grid,.svc-grid{grid-template-columns:1fr}}
+/* the website's .num (step badge) must not style number columns in tables */
+table.dt th.num,table.dt td.num{display:table-cell;width:auto;height:auto;border-radius:0;margin:0;place-items:initial;text-align:end}
+table.dt td.num{background:none;color:inherit;font-weight:inherit}
+table.dt th.num{background:#F7F8FB;color:var(--muted);font-weight:700}

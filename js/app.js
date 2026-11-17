@@ -34,6 +34,10 @@
   const avatarHTML = (p) => p.logo
     ? '<div class="avatar logo-av"><img src="' + p.logo + '" alt="UTAS"></div>'
     : '<div class="avatar" style="background:' + p.color + '">' + p.initials + '</div>';
+  // star rating, or a "New" badge for a company that has no reviews yet
+  const rateHTML = (p) => (p.reviews
+    ? '<span class="rate"><i>★</i> ' + p.rating.toFixed(1) + '</span><span>(' + p.reviews + ')</span>'
+    : '<span class="pill new-pill">' + t('card.new') + '</span>');
   const partnerPill = (p) => (p.utas ? '<span class="pill utas-pill">' + t('utas.partner') + '</span>' : '');
   const minPrice = (p, key) => (key && p.services[key] != null ? p.services[key] : Math.min(...Object.values(p.services)));
 
@@ -66,6 +70,14 @@
     $$('[data-i18n-placeholder]').forEach((el) => (el.placeholder = t(el.dataset.i18nPlaceholder)));
     $$('[data-i18n-alt]').forEach((el) => (el.alt = t(el.dataset.i18nAlt)));
     $('#joinBtn').href = waLink(TEAM_WHATSAPP, t('msg.join'));
+    // signed in already? the header button leads straight to the dashboard
+    try {
+      const s = JSON.parse(sessionStorage.getItem('careline_session') || 'null');
+      if (s && s.exp > Date.now()) {
+        $('#loginBtn span').textContent = t('nav.dashboard');
+        $('#loginBtn').href = s.role === 'admin' ? 'admin.html' : 'portal.html';
+      }
+    } catch (e) {}
   }
 
   /* ---------- selects ---------- */
@@ -129,7 +141,7 @@
       '<div class="card-top">' +
         '' + avatarHTML(p) + '' +
         '<div><h3>' + nameOf(p) + '</h3>' +
-        '<div class="meta"><span class="rate"><i>★</i> ' + p.rating.toFixed(1) + '</span><span>(' + p.reviews + ')</span><span>· ' + t('card.yrs', { n: p.years }) + '</span></div></div>' +
+        '<div class="meta">' + rateHTML(p) + (p.years ? '<span>· ' + t('card.yrs', { n: p.years }) + '</span>' : '') + '</div></div>' +
       '</div>' +
       '<div class="pills"><span class="pill ' + (open ? 'on' : 'off') + '">' + (open ? t('card.open') : t('card.closed')) + '</span>' + partnerPill(p) + '</div>' +
       '<div class="tags">' + tags + '</div>' +
@@ -183,7 +195,7 @@
     T.log('open', id);
     $('#mBody').innerHTML =
       '<div class="card-top">' + avatarHTML(p) + '' +
-      '<div><h3 id="mTitle">' + nameOf(p) + '</h3><div class="meta"><span class="rate"><i>★</i> ' + p.rating.toFixed(1) + '</span><span>(' + p.reviews + ')</span>' +
+      '<div><h3 id="mTitle">' + nameOf(p) + '</h3><div class="meta">' + rateHTML(p) +
       '<span class="pill ' + (isOpen(p) ? 'on' : 'off') + '">' + (isOpen(p) ? t('card.open') : t('card.closed')) + '</span>' + partnerPill(p) + '</div></div></div>' +
       '<p class="m-desc">' + pick(p.desc, p.descAr) + '</p>' +
       '<div class="m-h">' + t('modal.hours') + '</div><div>' + hoursText(p) + ' · ' + t('card.reply', { n: p.reply }) + '</div>' +
@@ -239,7 +251,7 @@
       box.innerHTML = list.map((p) =>
         '<label class="co"><input type="radio" name="uCo" value="' + p.id + '"' + (p.id === utas.company ? ' checked' : '') + '>' +
           '' + avatarHTML(p) + '' +
-          '<div class="info"><b>' + nameOf(p) + '</b>' + (p.utas ? '<span class="pill utas-pill">' + t('utas.partner') + '</span> ' : '') + '<small>★ ' + p.rating.toFixed(1) + ' (' + p.reviews + ') · ' + (isOpen(p) ? t('card.open') : t('card.closed')) + '</small></div>' +
+          '<div class="info"><b>' + nameOf(p) + '</b>' + (p.utas ? '<span class="pill utas-pill">' + t('utas.partner') + '</span> ' : '') + '<small>' + (p.reviews ? '★ ' + p.rating.toFixed(1) + ' (' + p.reviews + ')' : t('card.new')) + ' · ' + (isOpen(p) ? t('card.open') : t('card.closed')) + '</small></div>' +
           '<div class="cp">' + utasTotal(p).toFixed(3) + ' <small>' + t('cur') + '</small></div>' +
           '<span class="tick">✓</span></label>').join('');
     }

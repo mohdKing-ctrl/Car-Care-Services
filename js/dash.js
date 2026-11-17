@@ -44,7 +44,7 @@ const Dash = (function () {
     for (let i = 89; i >= 0; i--) days.push(dkey(new Date(today.getTime() - i * DAY)));
     const rows = {};
     const orders = [];
-    PROVIDERS.forEach((p) => {
+    PROVIDERS.filter((p) => !p.custom).forEach((p) => {
       rows[p.id] = {};
       const keys = Object.keys(p.services);
       const serves = p.govs.filter((g) => UTAS_BRANCHES.some((b) => b.gov === g));
@@ -84,7 +84,7 @@ const Dash = (function () {
     });
     const visits = {};
     days.forEach((d) => {
-      let s = 0; PROVIDERS.forEach((p) => (s += rows[p.id][d].imp));
+      let s = 0; Object.keys(rows).forEach((id) => (s += rows[id][d].imp));
       visits[d] = Math.round((s / 7) * (0.9 + rng(hashStr('v' + d))() * 0.2));
     });
     orders.sort((a, b) => b.t - a.t);
@@ -119,7 +119,7 @@ const Dash = (function () {
       keys.forEach((k, i) => {
         if (!company) { daily[i].visit += S.visits[k] || 0; total.visit += S.visits[k] || 0; }
         PROVIDERS.forEach((p) => {
-          const r = S.rows[p.id][k]; if (!r) return;
+          const r = S.rows[p.id] && S.rows[p.id][k]; if (!r) return;
           ['imp', 'open', 'call', 'wa', 'svc', 'order'].forEach((m) => add(i, p.id, m, r[m]));
           Object.keys(r.bySvc).forEach((sk) => { if (!company || company === p.id) bySvc[sk] = (bySvc[sk] || 0) + r.bySvc[sk]; });
         });

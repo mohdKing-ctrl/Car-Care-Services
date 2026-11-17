@@ -340,3 +340,24 @@ html[lang="ar"] .m-h{text-transform:none;letter-spacing:0}
 .join-login{margin-top:10px;font-size:.9rem}
 .join-login a{color:#C5CFDF;text-decoration:underline;text-underline-offset:3px}
 .join-login a:hover{color:#fff}
+
+/* ---------- header login button ---------- */
+.header-in{gap:16px}
+.nav{gap:2px}
+.nav a{padding:8px 11px}
+.btn-login{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:99px;border:1.5px solid var(--utas);color:var(--utas);background:#fff;font-weight:700;font-size:.92rem;white-space:nowrap;flex:none;transition:background .15s,color .15s}
+.btn-login:hover{background:var(--utas);color:#fff}
+.btn-login svg{width:18px;height:18px}
+.pill.new-pill{background:#E3F4EC;color:#14693F}
+@media (max-width:1320px){.logo-text small{display:none}}
+@media (max-width:1200px){
+  .header-actions{margin-inline-start:auto}
+  .burger{display:flex}
+  .nav{position:absolute;inset-inline:0;top:68px;flex-direction:column;background:#fff;border-bottom:1px solid var(--line);padding:10px 16px 16px;display:none;margin:0;gap:4px}
+  .nav.open{display:flex}
+  .nav a{padding:12px}
+}
+@media (max-width:480px){
+  .logo-text{display:none}
+  .btn-login{padding:7px 12px;font-size:.85rem}
+}

@@ -3,7 +3,7 @@
 Compare car wash and car service companies across the Sultanate of Oman.
 Customers compare local companies and contact them directly by phone call or WhatsApp. The company comes to the customer.
 
-This is a demo for a college project. All companies are fictional examples.
+All companies listed are examples.
 
 ## Features
 - Search by service (wash, interior, polish, oil change, battery, tyres, A/C, brakes) and by governorate (all 11 in Oman)
@@ -46,14 +46,16 @@ A "back end" page for the search-engine setup. Open it from the admin dashboard 
 Because GitHub Pages is static, the panel saves a draft in your browser and gives you files to upload to the repository (it cannot write to GitHub itself). The panel page is marked `noindex` so it does not appear on Google.
 
 ## Login, admin dashboard and company dashboards
-- `login.html`: one login page. The administrator goes to `admin.html`; each company goes to its own `portal.html`.
-- **Admin dashboard** (`admin.html`): overview with visits, views, calls, WhatsApp clicks and orders; list of all companies with full details; customers and orders (CSV export); **SEO text editor** (title, meta description, keywords, share text); accounts and a password tool.
-- **Company dashboard** (`portal.html`): each company sees only its own visits, clicks on its services, customers who ordered, and its listing.
-- Login details are in `LOGIN-DETAILS.md` (one folder **above** this one, so it is not uploaded). Keep it private.
-- Accounts are in `js/accounts.js` (salted hashes only). Change a password in the admin dashboard, tab **Accounts**.
+- **Login** button at the top left of the website (everyone can see it). It opens `login.html`.
+- **Quick login** on `login.html`: click "Administrator" or any company and its username and password are filled in. Then press **Sign in**.
+- **Admin dashboard** (`admin.html`):
+  - **Website meta description** box at the top: type and press Save.
+  - **Meta description & SEO**: title, keywords, share text, Google preview, download the updated `index.html`.
+  - **Companies**: every company with views, profile opens, calls, WhatsApp clicks, service clicks and orders.
+  - **+ Add company**: add a business that subscribes. It appears on the website at once and gets its own username, password and dashboard.
+  - **Customers & orders**, **Usernames & passwords** (show passwords, change a password).
+- **Company dashboard** (`portal.html`): each company sees only its own views, clicks on its card, calls, WhatsApp clicks, clicks on each of its services, and its customers.
 
-### How the numbers work (important)
-GitHub Pages is a static host with no database, so:
-- Visits and clicks made on the public website are recorded **in the visitor's own browser** (`js/track.js`). Dashboards show them as "live" events, merged with **simulated sample history** so the charts are not empty in a demo (switch it off with "Include sample history").
-- The login is checked in the browser, so it is a **demo**, not real security. A real system needs a server (for example Firebase or Supabase) to store events and check passwords.
-- The SEO editor's **Save & apply** changes the text on the browser that saved it. To publish for everyone, use **Download updated index.html** and upload it to GitHub.
+### Where things are saved
+GitHub Pages has no database, so everything the admin adds or changes (new companies, passwords, meta description) and the visits and clicks are saved **in the browser of the device where it happened**. Use the same computer and browser when you present.
+To publish the meta description for Google, press **Download updated index.html** in the dashboard and upload that file to GitHub.

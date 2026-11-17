@@ -24,7 +24,7 @@
 
   const avatar = '<div class="avatar' + (p.logo ? ' logo-av' : '') + '" style="' + (p.logo ? '' : 'background:' + p.color) + '">' + (p.logo ? '<img src="' + p.logo + '" alt="">' : p.initials) + '</div>';
   $('#profile').innerHTML = '<div class="card-top">' + avatar + '<div><h2 style="margin:0">Welcome, ' + esc(p.name) + '</h2>' +
-    '<div class="meta"><span>' + esc(p.nameAr) + '</span><span class="rate"><i>★</i> ' + p.rating.toFixed(1) + '</span><span>(' + p.reviews + ' reviews)</span>' +
+    '<div class="meta"><span>' + esc(p.nameAr) + '</span>' + (p.reviews ? '<span class="rate"><i>★</i> ' + p.rating.toFixed(1) + '</span><span>(' + p.reviews + ' reviews)</span>' : '<span class="tag-s tag-live">New on Care Line</span>') +
     (p.utas ? '<span class="pill utas-pill">UTAS Partner</span>' : '') + '</div></div></div>';
 
   const KPI = [
@@ -40,10 +40,7 @@
     const days = +$('#period').value, sample = $('#useSample').checked;
     const cur = D.stats({ days, sample, company: id }), prev = D.stats({ days, offset: days, sample, company: id });
     $('#kpis').innerHTML = D.kpiRow(cur.total, prev.total, KPI);
-    const live = Track.events().filter((e) => e.c === id).length;
-    $('#sampleNote').innerHTML = sample
-      ? 'Sample history is <b>simulated</b> for the demonstration. Live events for you on this browser: <b>' + live + '</b>.'
-      : 'Showing only live events recorded on this browser: <b>' + live + '</b>.';
+    $('#sampleNote').innerHTML = 'Activity recorded on this device: <b>' + Track.events().filter((e) => e.c === id).length + '</b>';
 
     D.line($('#mainChart'), {
       title: 'Views and contact actions',
@@ -74,7 +71,7 @@
   $('#listing').innerHTML =
     '<div class="dgrid">' +
     '<div><span>Phone / WhatsApp</span>' + D.fmtPhone(p.wa) + '</div>' +
-    '<div><span>Working hours</span>' + (p.hours[0] === 0 && p.hours[1] === 24 ? '24 hours' : p.hours[0] + ':00 – ' + p.hours[1] + ':00') + ' · replies in ~' + p.reply + ' min</div>' +
+    '<div><span>Working hours</span>' + (p.hours[0] === 0 && p.hours[1] === 24 ? '24 hours' : p.hours[0] + ':00 – ' + p.hours[1] + ':00') + '</div>' +
     '<div><span>Governorates</span>' + esc(p.govs.map(D.govName).join(', ')) + '</div>' +
     '<div><span>Areas served</span>' + esc(p.areas.map((a) => a[0]).join(', ')) + '</div>' +
     '<div style="grid-column:1/-1"><span>Description</span>' + esc(p.desc) + '</div></div>' +

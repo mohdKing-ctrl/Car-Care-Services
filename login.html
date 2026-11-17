@@ -20,7 +20,7 @@
       <div class="logo-text">Care Line<small>كير لاين</small></div>
     </div>
     <h1>Sign in</h1>
-    <p class="lead">For the administrator and partner companies. Each company sees only its own dashboard.</p>
+    <p class="lead">For the administrator and our partner companies. Each company sees only its own dashboard.</p>
 
     <div class="login-err" id="err" role="alert" hidden></div>
 
@@ -39,16 +39,25 @@
       <button class="btn btn-primary btn-lg" type="submit" id="go">Sign in</button>
     </form>
 
-    <p class="login-foot"><a href="index.html">← Back to the website</a><br>
-    Demo login for a college project. Your session ends when you close the tab.</p>
+    <section class="quick" aria-labelledby="qTitle">
+      <h2 id="qTitle">Quick login</h2>
+      <p>Click an account to fill in its username and password, then press <b>Sign in</b>.</p>
+      <div class="q-admin" id="qAdmin"></div>
+      <div class="q-label">Companies</div>
+      <div class="q-list" id="qList"></div>
+    </section>
+
+    <p class="login-foot"><a href="index.html">← Back to the website</a><br>Your session ends when you close the tab.</p>
   </main>
 </div>
 
 <script src="js/accounts.js"></script>
+<script src="js/store.js"></script>
 <script src="js/auth.js"></script>
 <script>
 (function () {
   const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const params = new URLSearchParams(location.search);
   const safeNext = (n) => (/^[\w-]+\.html(\?[\w=&%.\-]*)?(#[\w-]*)?$/.test(n || '') ? n : '');
 
@@ -62,6 +71,30 @@
     else location.replace(next && next.startsWith('portal.html') ? next : 'portal.html');
   }
   function showErr(msg) { const e = $('#err'); e.textContent = msg; e.hidden = false; }
+
+  /* ---------- quick login links ---------- */
+  const initials = (name) => name.replace(/\(.*?\)/g, '').trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+  const admin = ACCOUNTS.find((a) => a.role === 'admin');
+  if (admin) {
+    $('#qAdmin').innerHTML = '<button type="button" class="q-btn q-main" data-user="' + esc(admin.user) + '">' +
+      '<span class="q-av">★</span><span class="q-t"><b>Administrator</b><small>' + esc(admin.user) + '</small></span><span class="q-go">Fill in</span></button>';
+  }
+  $('#qList').innerHTML = ACCOUNTS.filter((a) => a.role === 'company').map((a) =>
+    '<button type="button" class="q-btn" data-user="' + esc(a.user) + '"><span class="q-av">' + esc(initials(a.name)) + '</span>' +
+    '<span class="q-t"><b>' + esc(a.name) + '</b><small>' + esc(a.user) + '</small></span></button>').join('');
+
+  document.querySelector('.quick').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-user]'); if (!b) return;
+    const acc = ACCOUNTS.find((a) => a.user === b.dataset.user); if (!acc) return;
+    $('#u').value = acc.user;
+    $('#p').value = acc.pw || '';
+    $('#p').type = 'text'; $('#show').textContent = 'Hide';
+    $('#err').hidden = true;
+    document.querySelectorAll('.q-btn.on').forEach((x) => x.classList.remove('on'));
+    b.classList.add('on');
+    $('#form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    $('#go').focus({ preventScroll: true });
+  });
 
   $('#show').addEventListener('click', () => {
     const p = $('#p'); const hide = p.type === 'password';
