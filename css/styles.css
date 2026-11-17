@@ -345,9 +345,9 @@ html[lang="ar"] .m-h{text-transform:none;letter-spacing:0}
 .header-in{gap:16px}
 .nav{gap:2px}
 .nav a{padding:8px 11px}
-.btn-login{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:99px;border:1.5px solid var(--utas);color:var(--utas);background:#fff;font-weight:700;font-size:.92rem;white-space:nowrap;flex:none;transition:background .15s,color .15s}
-.btn-login:hover{background:var(--utas);color:#fff}
-.btn-login svg{width:18px;height:18px}
+.btn-login{display:inline-flex;align-items:center;padding:8px 16px;border-radius:10px;background:var(--utas);color:#fff;font-weight:600;font-size:.95rem;white-space:nowrap;flex:none;transition:background .15s}
+.btn-login:hover{background:#17306E;color:#fff}
+.btn-login:focus-visible{outline:3px solid #F2B33D;outline-offset:2px}
 .pill.new-pill{background:#E3F4EC;color:#14693F}
 @media (max-width:1320px){.logo-text small{display:none}}
 @media (max-width:1200px){
@@ -359,5 +359,5 @@ html[lang="ar"] .m-h{text-transform:none;letter-spacing:0}
 }
 @media (max-width:480px){
   .logo-text{display:none}
-  .btn-login{padding:7px 12px;font-size:.85rem}
+  .btn-login{padding:7px 14px;font-size:.9rem}
 }
